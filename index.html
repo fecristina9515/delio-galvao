@@ -333,41 +333,99 @@
     .list-source { font-size: 11px; color: var(--tt); }
 
     /* ── CONTACT ── */
-    .contact-intro { font-size: 13px; color: var(--ts); margin-bottom: 24px; line-height: 1.6; }
-    .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .contact-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 20px;
+      border: .5px solid var(--border);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    @media (max-width: 640px) {
+      .contact-card { grid-template-columns: 1fr; }
+      .contact-deco  { display: none; }
+    }
+    .contact-form-side { padding: 32px; }
+    .contact-intro {
+      font-size: 13px; color: var(--ts);
+      margin-bottom: 24px; line-height: 1.6;
+    }
+    .form-label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: .05em; color: var(--ts);
+      margin-bottom: 6px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .form-field { margin-bottom: 12px; }
     .form-input, .form-textarea {
-      width: 100%; padding: 11px 14px;
+      width: 100%; padding: 10px 13px;
       border-radius: 10px;
       border: .5px solid var(--border);
       background: var(--sur2); color: var(--tp);
-      font-size: 14px; font-family: 'Geist', sans-serif;
-      outline: none; transition: border-color .15s;
+      font-size: 13px; font-family: 'Geist', sans-serif;
+      outline: none; transition: border-color .15s, box-shadow .15s;
       resize: none;
     }
-    .form-input:focus, .form-textarea:focus { border-color: var(--tp); }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--tp);
+      box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+    }
     .form-input::placeholder, .form-textarea::placeholder { color: var(--tt); }
     .submit-btn {
-      width: 100%; padding: 12px 0;
-      border-radius: 100px;
+      width: 100%; padding: 11px 0; margin-top: 4px;
+      border-radius: 10px;
       background: var(--tp); color: var(--bg);
-      font-size: 14px; font-weight: 600;
+      font-size: 13px; font-weight: 600;
       border: none; cursor: pointer;
       font-family: 'Geist', sans-serif;
       transition: opacity .15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .submit-btn:disabled { opacity: .35; cursor: default; }
     .submit-btn:not(:disabled):hover { opacity: .85; }
     .sent-box {
-      padding: 28px; background: var(--surface);
-      border-radius: 14px; border: .5px solid var(--border);
-      text-align: center; display: none;
+      padding: 28px; text-align: center; display: none;
     }
     .sent-box.show { display: block; }
-    .sent-icon { font-size: 32px; color: #22c55e; display: block; margin-bottom: 10px; }
+    .sent-icon { font-size: 36px; color: #22c55e; display: block; margin-bottom: 12px; }
     .sent-title { font-size: 15px; font-weight: 600; color: var(--tp); margin-bottom: 4px; }
     .sent-sub   { font-size: 13px; color: var(--ts); }
     .reset-btn  { margin-top: 16px; padding: 8px 20px; border-radius: 100px; border: .5px solid var(--border); background: transparent; color: var(--ts); font-size: 12px; cursor: pointer; font-family: 'Geist', sans-serif; }
-    .socials-list { margin-top: 28px; }
+    .contact-deco {
+      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 32px; gap: 24px; position: relative; overflow: hidden;
+    }
+    .deco-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); opacity: .25; pointer-events: none;
+    }
+    .deco-quote {
+      font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.75);
+      text-align: center; position: relative; z-index: 1;
+      font-style: italic; max-width: 220px;
+    }
+    .deco-quote::before {
+      content: '"';
+      font-size: 48px; line-height: 1;
+      color: rgba(255,255,255,0.15);
+      display: block; margin-bottom: 8px;
+      font-style: normal;
+    }
+    .deco-author {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      position: relative; z-index: 1;
+    }
+    .deco-img {
+      width: 64px; height: 64px; border-radius: 50%;
+      object-fit: cover; border: 2px solid rgba(255,255,255,0.15);
+      position: relative; z-index: 1;
+    }
   </style>
 </head>
 <body>
@@ -513,50 +571,55 @@
       <div class="tab-inner">
         <div class="section-eyebrow">Fale comigo</div>
         <div class="section-title">Contato</div>
-        <p class="contact-intro">Para parcerias, eventos ou só para trocar uma ideia sobre livros — manda uma mensagem.</p>
 
-        <div id="form-wrap">
-          <div class="form-group">
-            <input  class="form-input"    id="f-nome"  type="text"  placeholder="Seu nome" />
-            <input  class="form-input"    id="f-email" type="email" placeholder="Seu e-mail" />
-            <textarea class="form-textarea" id="f-msg" rows="5"     placeholder="Sua mensagem..."></textarea>
+        <div class="contact-card">
+          <!-- Formulário -->
+          <div class="contact-form-side">
+            <p class="contact-intro">Para parcerias, eventos ou só para trocar uma ideia sobre livros — manda uma mensagem.</p>
+
+            <div id="form-wrap">
+              <div class="form-row">
+                <div>
+                  <label class="form-label" for="f-nome">Nome</label>
+                  <input class="form-input" id="f-nome" type="text" placeholder="Seu nome" />
+                </div>
+                <div>
+                  <label class="form-label" for="f-email">E-mail</label>
+                  <input class="form-input" id="f-email" type="email" placeholder="Seu e-mail" />
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="f-assunto">Assunto</label>
+                <input class="form-input" id="f-assunto" type="text" placeholder="Ex: Parceria, evento, dúvida..." />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="f-msg">Mensagem</label>
+                <textarea class="form-textarea" id="f-msg" rows="5" placeholder="Sua mensagem..."></textarea>
+              </div>
+              <button class="submit-btn" id="submit-btn" disabled>
+                <i class="ti ti-send" style="font-size:14px"></i>
+                Enviar mensagem
+              </button>
+            </div>
+
+            <div class="sent-box" id="sent-box">
+              <i class="ti ti-circle-check sent-icon"></i>
+              <div class="sent-title">Mensagem preparada!</div>
+              <div class="sent-sub">Seu cliente de e-mail foi aberto com a mensagem pronta.</div>
+              <button class="reset-btn" id="reset-btn">Enviar outra</button>
+            </div>
           </div>
-          <button class="submit-btn" id="submit-btn" disabled>Enviar mensagem</button>
-        </div>
 
-        <div class="sent-box" id="sent-box">
-          <i class="ti ti-circle-check sent-icon"></i>
-          <div class="sent-title">Mensagem preparada!</div>
-          <div class="sent-sub">Seu cliente de e-mail foi aberto com a mensagem pronta.</div>
-          <button class="reset-btn" id="reset-btn">Enviar outra</button>
-        </div>
-
-        <div class="socials-list list-group">
-          <a class="list-row" href="https://www.instagram.com/deliogalvao/" target="_blank" rel="noopener">
-            <div class="list-icon"><i class="ti ti-brand-instagram"></i></div>
-            <div class="list-body"><div class="list-title">Instagram</div></div>
-            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-          </a>
-          <a class="list-row" href="https://www.tiktok.com/@deliogalvao" target="_blank" rel="noopener">
-            <div class="list-icon"><i class="ti ti-brand-tiktok"></i></div>
-            <div class="list-body"><div class="list-title">TikTok</div></div>
-            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-          </a>
-          <a class="list-row" href="https://www.facebook.com/deliogalvaooficial" target="_blank" rel="noopener">
-            <div class="list-icon"><i class="ti ti-brand-facebook"></i></div>
-            <div class="list-body"><div class="list-title">Facebook</div></div>
-            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-          </a>
-          <a class="list-row" href="https://www.linkedin.com/in/deliogalvao" target="_blank" rel="noopener">
-            <div class="list-icon"><i class="ti ti-brand-linkedin"></i></div>
-            <div class="list-body"><div class="list-title">LinkedIn</div></div>
-            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-          </a>
-          <a class="list-row" href="mailto:contato@deliogalvao.com.br">
-            <div class="list-icon"><i class="ti ti-mail"></i></div>
-            <div class="list-body"><div class="list-title">E-mail</div></div>
-            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-          </a>
+          <!-- Painel decorativo -->
+          <div class="contact-deco">
+            <div class="deco-blob" style="width:200px;height:200px;background:#3b82f6;top:-40px;right:-40px;"></div>
+            <div class="deco-blob" style="width:150px;height:150px;background:#8b5cf6;bottom:-30px;left:-30px;"></div>
+            <img class="deco-img"
+              src="https://m.media-amazon.com/images/S/amzn-author-media-prod/fkkkqph6got6iqud3er0umuqsh._SX300_CR0%2C0%2C300%2C300_.jpg"
+              alt="Délio Galvão" />
+            <p class="deco-quote">A escrita é a única forma de multiplicar o tempo — cada leitor vive o mesmo instante de forma única.</p>
+            <span class="deco-author">Délio Galvão</span>
+          </div>
         </div>
       </div>
     </div>
@@ -670,26 +733,27 @@ function renderCarousel() {
 renderCarousel();
 
 // ── Contact form ──
-const nome  = document.getElementById('f-nome');
-const email = document.getElementById('f-email');
-const msg   = document.getElementById('f-msg');
+const nome    = document.getElementById('f-nome');
+const email   = document.getElementById('f-email');
+const assunto = document.getElementById('f-assunto');
+const msg     = document.getElementById('f-msg');
 const submitBtn = document.getElementById('submit-btn');
 
 function checkForm() {
-  submitBtn.disabled = !(nome.value.trim() && email.value.trim() && msg.value.trim());
+  submitBtn.disabled = !(nome.value.trim() && email.value.trim() && assunto.value.trim() && msg.value.trim());
 }
-[nome, email, msg].forEach(el => el.addEventListener('input', checkForm));
+[nome, email, assunto, msg].forEach(el => el.addEventListener('input', checkForm));
 
 submitBtn.addEventListener('click', () => {
-  const subject = encodeURIComponent(`Contato via site — ${nome.value}`);
-  const body    = encodeURIComponent(`Nome: ${nome.value}\nE-mail: ${email.value}\n\n${msg.value}`);
+  const subject = encodeURIComponent(assunto.value || `Contato via site — ${nome.value}`);
+  const body    = encodeURIComponent(`Nome: ${nome.value}\nE-mail: ${email.value}\nAssunto: ${assunto.value}\n\n${msg.value}`);
   window.open(`mailto:contato@deliogalvao.com.br?subject=${subject}&body=${body}`, '_blank');
   document.getElementById('form-wrap').style.display = 'none';
   document.getElementById('sent-box').classList.add('show');
 });
 
 document.getElementById('reset-btn').addEventListener('click', () => {
-  [nome, email, msg].forEach(el => el.value = '');
+  [nome, email, assunto, msg].forEach(el => el.value = '');
   checkForm();
   document.getElementById('sent-box').classList.remove('show');
   document.getElementById('form-wrap').style.display = 'block';
