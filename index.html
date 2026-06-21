@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Délio Galvão — Escritor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #fafaf9;
+      --surface: #ffffff;
+      --sur2:    #f4f4f5;
+      --border:  rgba(0,0,0,0.07);
+      --tp:      #09090b;
+      --ts:      #71717a;
+      --tt:      #a1a1aa;
+    }
+    body.dark {
+      --bg:      #09090b;
+      --surface: #18181b;
+      --sur2:    #27272a;
+      --border:  rgba(255,255,255,0.08);
+      --tp:      #fafafa;
+      --ts:      #a1a1aa;
+      --tt:      #52525b;
+    }
+
+    body {
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--tp);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      transition: background .3s, color .3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 36px 24px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    .theme-btn {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--sur2);
+      border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--ts);
+      transition: background .15s;
+    }
+    .avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--sur2);
+      border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 400; color: var(--ts);
+      margin-bottom: 14px;
+    }
+    .author-name {
+      font-size: 26px; font-weight: 700;
+      letter-spacing: -.3px; color: var(--tp);
+      margin-bottom: 6px;
+    }
+    .author-bio {
+      font-size: 14px; color: var(--ts);
+      line-height: 1.6; max-width: 360px;
+      margin-bottom: 20px;
+    }
+    .socials {
+      display: flex; gap: 8px;
+      flex-wrap: wrap; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .social-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ts); text-decoration: none;
+      transition: border-color .15s, color .15s;
+      font-size: 16px;
+    }
+    .social-btn:hover { border-color: var(--tp); color: var(--tp); }
+
+    /* ── NAV TABS ── */
+    .nav-tabs {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      border-bottom: .5px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab {
+      padding: 10px 20px;
+      font-size: 13px; font-weight: 400;
+      color: var(--ts);
+      background: transparent; border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer; white-space: nowrap;
+      font-family: 'Geist', sans-serif;
+      transition: color .15s, border-color .15s;
+      margin-bottom: -1px;
+    }
+    .nav-tab.active {
+      color: var(--tp); font-weight: 600;
+      border-bottom-color: var(--tp);
+    }
+
+    /* ── CONTENT WRAPPER ── */
+    .content { max-width: 680px; margin: 0 auto; }
+    .tab-panel { display: none; padding: 32px 24px 48px; }
+    .tab-panel.active { display: block; }
+
+    /* ── SECTION LABELS ── */
+    .section-eyebrow {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--tt); margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 22px; font-weight: 700;
+      color: var(--tp); margin-bottom: 20px;
+    }
+
+    /* ── BOOK FILTERS ── */
+    .book-header {
+      display: flex; align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      padding: 24px 24px 12px;
+    }
+    .filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-pill {
+      padding: 5px 14px; border-radius: 100px;
+      border: .5px solid var(--border);
+      background: transparent; color: var(--ts);
+      font-size: 12px; font-weight: 500;
+      cursor: pointer; font-family: 'Geist', sans-serif;
+      transition: all .15s;
+    }
+    .filter-pill.active {
+      background: var(--tp); color: var(--bg);
+      border-color: transparent;
+    }
+
+    /* ── CAROUSEL ── */
+    .carousel-wrap { position: relative; padding: 4px 0 32px; }
+    .carousel-btn {
+      position: absolute; top: 40%; transform: translateY(-50%);
+      z-index: 10; width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--surface); border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--ts);
+      transition: border-color .15s;
+    }
+    .carousel-btn:hover { border-color: var(--tp); }
+    .carousel-btn.prev { left: 6px; }
+    .carousel-btn.next { right: 6px; }
+    .carousel {
+      display: flex; gap: 14px;
+      padding: 8px 52px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+
+    /* ── BOOK CARD ── */
+    .book-card {
+      min-width: 200px; max-width: 200px;
+      background: var(--surface);
+      border-radius: 16px;
+      border: .5px solid var(--border);
+      padding: 14px;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .book-cover-wrap { position: relative; }
+    .wish-btn {
+      position: absolute; top: 8px; left: 8px; z-index: 2;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--surface); border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--tt);
+      transition: color .15s;
+      font-size: 13px;
+    }
+    .wish-btn.active { color: #ef4444; }
+    .featured-badge {
+      position: absolute; top: 8px; right: 8px; z-index: 2;
+      background: var(--surface); border: .5px solid var(--border);
+      border-radius: 100px; padding: 2px 7px;
+      font-size: 9px; font-weight: 600; color: var(--ts);
+      letter-spacing: .05em;
+    }
+    .book-cover {
+      width: 100%; aspect-ratio: 2/3;
+      border-radius: 10px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      position: relative; overflow: hidden;
+    }
+    .book-spine {
+      width: 4px; position: absolute;
+      left: 0; top: 0; bottom: 0;
+    }
+    .book-initials {
+      font-size: 26px; font-weight: 700;
+      opacity: .25;
+    }
+    .book-cat-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      opacity: .45; text-align: center;
+      padding: 0 14px;
+    }
+    .book-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .book-category {
+      font-size: 9px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+    .book-title {
+      font-size: 14px; font-weight: 700;
+      color: var(--tp); line-height: 1.3;
+    }
+    .book-desc {
+      font-size: 11px; color: var(--ts); line-height: 1.5; flex: 1;
+    }
+    .buy-btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 0; border-radius: 100px;
+      background: var(--tp); color: var(--bg);
+      font-size: 12px; font-weight: 600;
+      text-decoration: none; margin-top: 2px;
+      font-family: 'Geist', sans-serif;
+      transition: opacity .15s;
+    }
+    .buy-btn:hover { opacity: .85; }
+
+    /* ── SOBRE ── */
+    .about-text {
+      font-size: 14px; color: var(--ts);
+      line-height: 1.8;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .about-text em { font-style: italic; color: var(--tp); }
+
+    /* ── AWARD CARD ── */
+    .award-card {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 18px;
+      background: var(--surface);
+      border: .5px solid var(--border);
+      border-radius: 14px;
+      text-decoration: none; color: inherit;
+      margin-bottom: 12px;
+      transition: border-color .15s;
+    }
+    .award-card:hover { border-color: var(--tp); }
+    .award-icon-wrap {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: #fff7ed; border: .5px solid #fed7aa;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 22px; color: #ea580c;
+    }
+    .award-body { flex: 1; min-width: 0; }
+    .award-title { font-size: 14px; font-weight: 600; color: var(--tp); margin-bottom: 3px; }
+    .award-desc  { font-size: 12px; color: var(--ts); }
+    .award-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+    .award-year  { font-size: 11px; font-weight: 600; color: #ea580c; background: #fff7ed; padding: 2px 8px; border-radius: 100px; }
+    .award-note  { padding: 16px 18px; background: var(--sur2); border-radius: 14px; border: .5px solid var(--border); font-size: 12px; color: var(--ts); line-height: 1.7; }
+    .award-note em { font-style: italic; color: var(--tp); }
+
+    /* ── MEDIA LIST ── */
+    .list-group {
+      background: var(--surface);
+      border-radius: 14px;
+      border: .5px solid var(--border);
+      overflow: hidden;
+    }
+    .list-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 16px;
+      text-decoration: none; color: inherit;
+      border-bottom: .5px solid var(--border);
+      transition: background .12s;
+    }
+    .list-row:last-child { border-bottom: none; }
+    .list-row:hover { background: var(--sur2); }
+    .list-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--sur2); border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 14px; color: var(--ts);
+    }
+    .list-body { flex: 1; min-width: 0; }
+    .list-title { font-size: 13px; font-weight: 500; color: var(--tp); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .list-source { font-size: 11px; color: var(--tt); }
+
+    /* ── CONTACT ── */
+    .contact-intro { font-size: 13px; color: var(--ts); margin-bottom: 24px; line-height: 1.6; }
+    .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .form-input, .form-textarea {
+      width: 100%; padding: 11px 14px;
+      border-radius: 10px;
+      border: .5px solid var(--border);
+      background: var(--sur2); color: var(--tp);
+      font-size: 14px; font-family: 'Geist', sans-serif;
+      outline: none; transition: border-color .15s;
+      resize: none;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--tp); }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--tt); }
+    .submit-btn {
+      width: 100%; padding: 12px 0;
+      border-radius: 100px;
+      background: var(--tp); color: var(--bg);
+      font-size: 14px; font-weight: 600;
+      border: none; cursor: pointer;
+      font-family: 'Geist', sans-serif;
+      transition: opacity .15s;
+    }
+    .submit-btn:disabled { opacity: .35; cursor: default; }
+    .submit-btn:not(:disabled):hover { opacity: .85; }
+    .sent-box {
+      padding: 28px; background: var(--surface);
+      border-radius: 14px; border: .5px solid var(--border);
+      text-align: center; display: none;
+    }
+    .sent-box.show { display: block; }
+    .sent-icon { font-size: 32px; color: #22c55e; display: block; margin-bottom: 10px; }
+    .sent-title { font-size: 15px; font-weight: 600; color: var(--tp); margin-bottom: 4px; }
+    .sent-sub   { font-size: 13px; color: var(--ts); }
+    .reset-btn  { margin-top: 16px; padding: 8px 20px; border-radius: 100px; border: .5px solid var(--border); background: transparent; color: var(--ts); font-size: 12px; cursor: pointer; font-family: 'Geist', sans-serif; }
+    .socials-list { margin-top: 28px; }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <button class="theme-btn" id="theme-btn" aria-label="Alternar tema">
+      <i class="ti ti-moon" id="theme-icon" style="font-size:15px"></i>
+    </button>
+    <div class="avatar">DG</div>
+    <div class="author-name">Délio Galvão</div>
+    <p class="author-bio">Escritor carioca — autor de romances,<br>infantojuvenis e contos variados.</p>
+    <div class="socials">
+      <a class="social-btn" href="https://www.instagram.com/deliogalvao/" target="_blank" rel="noopener" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+      <a class="social-btn" href="https://www.tiktok.com/@deliogalvao" target="_blank" rel="noopener" aria-label="TikTok"><i class="ti ti-brand-tiktok"></i></a>
+      <a class="social-btn" href="https://www.facebook.com/deliogalvaooficial" target="_blank" rel="noopener" aria-label="Facebook"><i class="ti ti-brand-facebook"></i></a>
+      <a class="social-btn" href="https://www.linkedin.com/in/deliogalvao" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ti ti-brand-linkedin"></i></a>
+      <a class="social-btn" href="mailto:contato@deliogalvao.com.br" aria-label="E-mail"><i class="ti ti-mail"></i></a>
+    </div>
+
+    <!-- NAV TABS -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-tab="home"           role="tab">Livros</button>
+      <button class="nav-tab"        data-tab="sobre"          role="tab">Sobre mim</button>
+      <button class="nav-tab"        data-tab="reconhecimento" role="tab">Reconhecimento</button>
+      <button class="nav-tab"        data-tab="midia"          role="tab">Na mídia</button>
+      <button class="nav-tab"        data-tab="contato"        role="tab">Contato</button>
+    </nav>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ── LIVROS ── -->
+    <div id="tab-home" class="tab-panel active" role="tabpanel">
+      <div class="book-header">
+        <div>
+          <div class="section-eyebrow">Coleção literária</div>
+          <div class="section-title" style="margin-bottom:0">Meus livros</div>
+        </div>
+        <div class="filter-pills" id="filter-pills">
+          <button class="filter-pill active" data-cat="Todos">Todos</button>
+          <button class="filter-pill" data-cat="Romance">Romance</button>
+          <button class="filter-pill" data-cat="Crônicas">Crônicas</button>
+          <button class="filter-pill" data-cat="Suspense">Suspense</button>
+          <button class="filter-pill" data-cat="Infantojuvenil">Infantojuvenil</button>
+        </div>
+      </div>
+      <div class="carousel-wrap">
+        <button class="carousel-btn prev" id="prev-btn" aria-label="Anterior"><i class="ti ti-chevron-left"></i></button>
+        <button class="carousel-btn next" id="next-btn" aria-label="Próximo"><i class="ti ti-chevron-right"></i></button>
+        <div class="carousel" id="carousel"></div>
+      </div>
+    </div>
+
+    <!-- ── SOBRE ── -->
+    <div id="tab-sobre" class="tab-panel" role="tabpanel">
+      <div class="section-eyebrow">Sobre mim</div>
+      <div class="section-title">Délio Galvão</div>
+      <div class="about-text">
+        <p>Escritor carioca, nascido no Rio de Janeiro, Délio Galvão é autor de livros infantojuvenis, romances e contos variados — narrativas que transitam entre o cotidiano urbano e o imaginário, sempre com olhar afetivo sobre as relações humanas.</p>
+        <p>Sua série infantojuvenil <em>O Diário das Fantásticas Viagens de Giovana</em> conquista leitores de todas as idades com aventuras que celebram a curiosidade e a amizade.</p>
+        <p>No universo adulto, explora temas do amor contemporâneo em <em>Crônicas para Casais Quase Modernos</em>, e mergulha no suspense com <em>Navalha, Veneno, Mistério</em> e o romance <em>Selva de Pedra</em>, vencedor do Prêmio Asas de Ouro 2023.</p>
+        <p>Além de escritor, mantém uma presença ativa nas redes sociais, onde compartilha crônicas, bastidores da escrita e sua paixão pela literatura brasileira.</p>
+      </div>
+    </div>
+
+    <!-- ── RECONHECIMENTO ── -->
+    <div id="tab-reconhecimento" class="tab-panel" role="tabpanel">
+      <div class="section-eyebrow">Reconhecimento</div>
+      <div class="section-title">Prêmios & menções</div>
+      <a class="award-card" href="https://www.instagram.com/p/C0EtkPuLNre/" target="_blank" rel="noopener">
+        <div class="award-icon-wrap"><i class="ti ti-award"></i></div>
+        <div class="award-body">
+          <div class="award-title">Prêmio Asas de Ouro 2023</div>
+          <div class="award-desc">Vencedor na categoria literatura</div>
+        </div>
+        <div class="award-right">
+          <span class="award-year">2023</span>
+          <i class="ti ti-chevron-right" style="color:var(--tt);font-size:13px"></i>
+        </div>
+      </a>
+      <div class="award-note">
+        <em>Selva de Pedra</em> também foi destaque em resenhas literárias e portais especializados, como o PublishNews e o Blog Leiturinha — que elegeu a série Giovana entre os 30 melhores livros infantis de 2021.
+      </div>
+    </div>
+
+    <!-- ── NA MÍDIA ── -->
+    <div id="tab-midia" class="tab-panel" role="tabpanel">
+      <div class="section-eyebrow">Imprensa</div>
+      <div class="section-title">Na mídia</div>
+      <div class="list-group">
+        <a class="list-row" href="https://www.lovemybookss.com/2023/12/resenha-selva-de-pedra.html" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-news"></i></div>
+          <div class="list-body"><div class="list-title">Resenha — Selva de Pedra</div><div class="list-source">lovemybookss.com</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="https://www.lovemybookss.com/2024/02/resenha-cronicas-para-casais-quase.html" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-news"></i></div>
+          <div class="list-body"><div class="list-title">Resenha — Crônicas para Casais Quase Modernos</div><div class="list-source">lovemybookss.com</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="https://www.publishnews.com.br/materias/2023/03/22/cronicas-sobre-familia" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-news"></i></div>
+          <div class="list-body"><div class="list-title">Crônicas sobre família</div><div class="list-source">PublishNews</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="https://mutantexis.wordpress.com/2023/10/24/dica-literaria-41-2023-assassinato-no-alto-leblon/" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-news"></i></div>
+          <div class="list-body"><div class="list-title">Dica literária — Assassinato no Alto Leblon</div><div class="list-source">mutantexis.wordpress.com</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="https://leiturinha.com.br/blog/os-30-melhores-livros-infantis-de-2021/" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-news"></i></div>
+          <div class="list-body"><div class="list-title">30 melhores livros infantis de 2021</div><div class="list-source">Blog Leiturinha</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="http://canalinfantil.com.br/viagens-de-giovana/" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-news"></i></div>
+          <div class="list-body"><div class="list-title">Viagens de Giovana — Canal Infantil</div><div class="list-source">canalinfantil.com.br</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="https://medium.com/@deliogalvao" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-pencil"></i></div>
+          <div class="list-body"><div class="list-title">Meus textos no Medium</div><div class="list-source">medium.com</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── CONTATO ── -->
+    <div id="tab-contato" class="tab-panel" role="tabpanel">
+      <div class="section-eyebrow">Fale comigo</div>
+      <div class="section-title">Contato</div>
+      <p class="contact-intro">Para parcerias, eventos ou só para trocar uma ideia sobre livros — manda uma mensagem.</p>
+
+      <div id="form-wrap">
+        <div class="form-group">
+          <input  class="form-input"    id="f-nome"  type="text"  placeholder="Seu nome" />
+          <input  class="form-input"    id="f-email" type="email" placeholder="Seu e-mail" />
+          <textarea class="form-textarea" id="f-msg" rows="5"     placeholder="Sua mensagem..."></textarea>
+        </div>
+        <button class="submit-btn" id="submit-btn" disabled>Enviar mensagem</button>
+      </div>
+
+      <div class="sent-box" id="sent-box">
+        <i class="ti ti-circle-check sent-icon"></i>
+        <div class="sent-title">Mensagem preparada!</div>
+        <div class="sent-sub">Seu cliente de e-mail foi aberto com a mensagem pronta.</div>
+        <button class="reset-btn" id="reset-btn">Enviar outra</button>
+      </div>
+
+      <div class="socials-list list-group">
+        <a class="list-row" href="https://www.instagram.com/deliogalvao/" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-brand-instagram"></i></div>
+          <div class="list-body"><div class="list-title">Instagram</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="https://www.tiktok.com/@deliogalvao" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-brand-tiktok"></i></div>
+          <div class="list-body"><div class="list-title">TikTok</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="https://www.facebook.com/deliogalvaooficial" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-brand-facebook"></i></div>
+          <div class="list-body"><div class="list-title">Facebook</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="https://www.linkedin.com/in/deliogalvao" target="_blank" rel="noopener">
+          <div class="list-icon"><i class="ti ti-brand-linkedin"></i></div>
+          <div class="list-body"><div class="list-title">LinkedIn</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+        <a class="list-row" href="mailto:contato@deliogalvao.com.br">
+          <div class="list-icon"><i class="ti ti-mail"></i></div>
+          <div class="list-body"><div class="list-title">E-mail</div></div>
+          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+<script>
+const books = [
+  { id:1, title:"Selva de Pedra",       category:"Romance",       description:"Um romance urbano que mergulha nas profundezas da cidade e dos seus segredos.", color:"#e8f0fe", accent:"#1a56db", featured:true,  link:"https://www.amazon.com.br/Selva-Pedra-D%C3%A9lio-Galv%C3%A3o/dp/6525496810/" },
+  { id:2, title:"Crônicas para Casais Quase Modernos", category:"Crônicas", description:"Histórias bem-humoradas sobre os desafios do amor contemporâneo.", color:"#fdf2f8", accent:"#9d174d", featured:false, link:"https://www.amazon.com.br/dp/B0D7MWJKG5" },
+  { id:3, title:"Navalha, Veneno, Mistério", category:"Suspense", description:"Uma trama de crime e intriga que prende o leitor até a última página.", color:"#fff7ed", accent:"#c2410c", featured:true,  link:"https://www.editorametamorfose.com.br/1056850/navalha-veneno-misterio" },
+  { id:4, title:"Diário das Fantásticas Viagens de Giovana — Vol. 1", category:"Infantojuvenil", description:"A aventura começa! Giovana embarca em viagens cheias de descobertas.", color:"#f0fdf4", accent:"#166534", featured:false, link:"https://amzn.to/4hdtaXl" },
+  { id:5, title:"Diário das Fantásticas Viagens de Giovana — Vol. 2", category:"Infantojuvenil", description:"A aventura continua em novos destinos e novas amizades.", color:"#faf5ff", accent:"#6b21a8", featured:false, link:"https://amzn.to/4hdtaXl" },
+  { id:6, title:"A Última Lua Azul", category:"Romance", description:"Uma história de amor marcada por encontros raros e momentos únicos.", color:"#eff6ff", accent:"#1e40af", featured:true,  link:"https://www.amazon.com.br" },
+];
+
+let wishlist = [];
+let currentCat = "Todos";
+const isDark = () => document.body.classList.contains('dark');
+
+// ── Theme toggle ──
+const themeBtn  = document.getElementById('theme-btn');
+const themeIcon = document.getElementById('theme-icon');
+themeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  themeIcon.className = isDark() ? 'ti ti-sun' : 'ti ti-moon';
+  renderCarousel();
+});
+
+// ── Nav tabs ──
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Filter pills ──
+document.querySelectorAll('.filter-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = btn.dataset.cat;
+    renderCarousel();
+  });
+});
+
+// ── Carousel ──
+const carousel = document.getElementById('carousel');
+document.getElementById('prev-btn').addEventListener('click', () => carousel.scrollBy({ left: -252, behavior: 'smooth' }));
+document.getElementById('next-btn').addEventListener('click', () => carousel.scrollBy({ left:  252, behavior: 'smooth' }));
+
+function renderCarousel() {
+  const filtered = currentCat === 'Todos' ? books : books.filter(b => b.category === currentCat);
+  const bg = isDark() ? '#09090b' : '#fafaf9';
+  const surface = isDark() ? '#18181b' : '#ffffff';
+  const border  = isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)';
+  const coverBg = isDark() ? '#2a2a2e' : null;
+
+  carousel.innerHTML = filtered.map(book => {
+    const initials = book.title.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    const wished   = wishlist.includes(book.id);
+    return `
+      <div class="book-card">
+        <div class="book-cover-wrap">
+          <button class="wish-btn ${wished ? 'active' : ''}" data-id="${book.id}" aria-label="Favoritar">
+            <i class="ti ${wished ? 'ti-heart-filled' : 'ti-heart'}"></i>
+          </button>
+          ${book.featured ? '<div class="featured-badge">Destaque</div>' : ''}
+          <div class="book-cover" style="background:${coverBg || book.color}; border:1.5px solid ${book.accent}22">
+            <div class="book-spine" style="background:${book.accent}"></div>
+            <div class="book-initials" style="color:${book.accent}">${initials}</div>
+            <div class="book-cat-label" style="color:${book.accent}">${book.category}</div>
+          </div>
+        </div>
+        <div class="book-info">
+          <div class="book-category" style="color:${book.accent}">${book.category}</div>
+          <div class="book-title">${book.title}</div>
+          <div class="book-desc">${book.description}</div>
+        </div>
+        <a class="buy-btn" href="${book.link}" target="_blank" rel="noopener">
+          <i class="ti ti-shopping-bag" style="font-size:12px"></i>
+          Comprar
+        </a>
+      </div>`;
+  }).join('');
+
+  // wishlist toggle
+  carousel.querySelectorAll('.wish-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = +btn.dataset.id;
+      wishlist = wishlist.includes(id) ? wishlist.filter(x=>x!==id) : [...wishlist, id];
+      renderCarousel();
+    });
+  });
+}
+renderCarousel();
+
+// ── Contact form ──
+const nome  = document.getElementById('f-nome');
+const email = document.getElementById('f-email');
+const msg   = document.getElementById('f-msg');
+const submitBtn = document.getElementById('submit-btn');
+
+function checkForm() {
+  submitBtn.disabled = !(nome.value.trim() && email.value.trim() && msg.value.trim());
+}
+[nome, email, msg].forEach(el => el.addEventListener('input', checkForm));
+
+submitBtn.addEventListener('click', () => {
+  const subject = encodeURIComponent(`Contato via site — ${nome.value}`);
+  const body    = encodeURIComponent(`Nome: ${nome.value}\nE-mail: ${email.value}\n\n${msg.value}`);
+  window.open(`mailto:contato@deliogalvao.com.br?subject=${subject}&body=${body}`, '_blank');
+  document.getElementById('form-wrap').style.display = 'none';
+  document.getElementById('sent-box').classList.add('show');
+});
+
+document.getElementById('reset-btn').addEventListener('click', () => {
+  [nome, email, msg].forEach(el => el.value = '');
+  checkForm();
+  document.getElementById('sent-box').classList.remove('show');
+  document.getElementById('form-wrap').style.display = 'block';
+});
+</script>
+</body>
+</html>
