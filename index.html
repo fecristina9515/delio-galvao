@@ -7,7 +7,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init('mXb4JiU1dsjqPSOEW');</script>
   <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -744,12 +747,24 @@ function checkForm() {
 }
 [nome, email, assunto, msg].forEach(el => el.addEventListener('input', checkForm));
 
-submitBtn.addEventListener('click', () => {
-  const subject = encodeURIComponent(assunto.value || `Contato via site — ${nome.value}`);
-  const body    = encodeURIComponent(`Nome: ${nome.value}\nE-mail: ${email.value}\nAssunto: ${assunto.value}\n\n${msg.value}`);
-  window.open(`mailto:djcgalvao@gmail.com,delioescritormkt@gmail.com?subject=${subject}&body=${body}`, '_blank');
-  document.getElementById('form-wrap').style.display = 'none';
-  document.getElementById('sent-box').classList.add('show');
+submitBtn.addEventListener('click', async () => {
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:14px;animation:spin .8s linear infinite"></i> Enviando...';
+
+  try {
+    await emailjs.send('service_g01io5p', 'template_1kq0z76', {
+      nome:      nome.value,
+      email:     email.value,
+      assunto:   assunto.value,
+      mensagem:  msg.value,
+    });
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('sent-box').classList.add('show');
+  } catch (err) {
+    submitBtn.innerHTML = '<i class="ti ti-send" style="font-size:14px"></i> Enviar mensagem';
+    checkForm();
+    alert('Erro ao enviar. Tente novamente.');
+  }
 });
 
 document.getElementById('reset-btn').addEventListener('click', () => {
@@ -757,6 +772,7 @@ document.getElementById('reset-btn').addEventListener('click', () => {
   checkForm();
   document.getElementById('sent-box').classList.remove('show');
   document.getElementById('form-wrap').style.display = 'block';
+  submitBtn.innerHTML = '<i class="ti ti-send" style="font-size:14px"></i> Enviar mensagem';
 });
 </script>
 </body>
