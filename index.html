@@ -125,8 +125,9 @@
 
     /* ── CONTENT WRAPPER ── */
     .content { max-width: 800px; margin: 0 auto; }
-    .tab-panel { display: none; padding: 32px 24px 48px; }
+    .tab-panel { display: none; padding: 28px 0 48px; }
     .tab-panel.active { display: block; }
+    .tab-inner { padding: 0 24px; }
 
     /* ── SECTION LABELS ── */
     .section-eyebrow {
@@ -138,13 +139,22 @@
       font-size: 22px; font-weight: 700;
       color: var(--tp); margin-bottom: 20px;
     }
+    .book-eyebrow {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--tt); margin-bottom: 6px;
+    }
+    .book-title-heading {
+      font-size: 22px; font-weight: 700;
+      color: var(--tp); margin-bottom: 0;
+    }
 
     /* ── BOOK FILTERS ── */
     .book-header {
       display: flex; align-items: center;
       justify-content: space-between;
       flex-wrap: wrap; gap: 12px;
-      padding: 24px 24px 12px;
+      padding: 28px 24px 12px;
     }
     .filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
     .filter-pill {
@@ -154,9 +164,24 @@
       font-size: 12px; font-weight: 500;
       cursor: pointer; font-family: 'Geist', sans-serif;
       transition: all .15s;
+      display: flex; align-items: center; gap: 6px;
     }
+    .filter-pill[style*="--cat"]::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--cat);
+      flex-shrink: 0;
+      opacity: 0.6;
+      transition: opacity .15s;
+    }
+    .filter-pill.active[style*="--cat"]::before { opacity: 1; }
     .filter-pill.active {
       background: var(--tp); color: var(--bg);
+      border-color: transparent;
+    }
+    .filter-pill[style*="--cat"].active {
+      background: var(--cat); color: #fff;
       border-color: transparent;
     }
 
@@ -384,15 +409,15 @@
     <div id="tab-home" class="tab-panel active" role="tabpanel">
       <div class="book-header">
         <div>
-          <div class="section-eyebrow">Coleção literária</div>
-          <div class="section-title" style="margin-bottom:0">Meus livros</div>
+          <div class="book-eyebrow">Coleção literária</div>
+          <div class="book-title-heading">Meus livros</div>
         </div>
         <div class="filter-pills" id="filter-pills">
           <button class="filter-pill active" data-cat="Todos">Todos</button>
-          <button class="filter-pill" data-cat="Romance Policial">Romance Policial</button>
-          <button class="filter-pill" data-cat="Crônicas">Crônicas</button>
-          <button class="filter-pill" data-cat="Suspense">Suspense</button>
-          <button class="filter-pill" data-cat="Infantojuvenil">Infantojuvenil</button>
+          <button class="filter-pill" data-cat="Romance Policial" style="--cat:#1E3A5F">Romance Policial</button>
+          <button class="filter-pill" data-cat="Crônicas"         style="--cat:#6B8E7A">Crônicas</button>
+          <button class="filter-pill" data-cat="Suspense"         style="--cat:#7A1F2B">Suspense</button>
+          <button class="filter-pill" data-cat="Infantojuvenil"   style="--cat:#F59E0B">Infantojuvenil</button>
         </div>
       </div>
       <div class="carousel-wrap">
@@ -404,133 +429,148 @@
 
     <!-- ── SOBRE ── -->
     <div id="tab-sobre" class="tab-panel" role="tabpanel">
-      <div class="section-eyebrow">Sobre mim</div>
-      <div class="section-title">Délio Galvão</div>
-      <div class="about-text">
-        <p>Escritor carioca, nascido no Rio de Janeiro, Délio Galvão é autor de livros infantojuvenis, romances e contos variados — narrativas que transitam entre o cotidiano urbano e o imaginário, sempre com olhar afetivo sobre as relações humanas.</p>
-        <p>Sua série infantojuvenil <em>O Diário das Fantásticas Viagens de Giovana</em> conquista leitores de todas as idades com aventuras que celebram a curiosidade e a amizade.</p>
-        <p>No universo adulto, explora temas do amor contemporâneo em <em>Crônicas para Casais Quase Modernos</em>, e mergulha no suspense com <em>Navalha, Veneno, Mistério</em> e o romance <em>Selva de Pedra</em>, vencedor do Prêmio Asas de Ouro 2023.</p>
-        <p>Além de escritor, mantém uma presença ativa nas redes sociais, onde compartilha crônicas, bastidores da escrita e sua paixão pela literatura brasileira.</p>
+      <div class="tab-inner">
+        <div class="section-eyebrow">Sobre mim</div>
+        <div class="section-title">Délio Galvão</div>
+        <div class="about-text">
+          <p>Escritor carioca, nascido no Rio de Janeiro, Délio Galvão é autor de livros infantojuvenis, romances e contos variados — narrativas que transitam entre o cotidiano urbano e o imaginário, sempre com olhar afetivo sobre as relações humanas.</p>
+          <p>Sua série infantojuvenil <em>O Diário das Fantásticas Viagens de Giovana</em> conquista leitores de todas as idades com aventuras que celebram a curiosidade e a amizade.</p>
+          <p>No universo adulto, explora temas do amor contemporâneo em <em>Crônicas para Casais Quase Modernos</em>, e mergulha no suspense com <em>Navalha, Veneno, Mistério</em> e o romance <em>Selva de Pedra</em>, vencedor do Prêmio Asas de Ouro 2023.</p>
+          <p>Além de escritor, mantém uma presença ativa nas redes sociais, onde compartilha crônicas, bastidores da escrita e sua paixão pela literatura brasileira.</p>
+        </div>
       </div>
     </div>
 
     <!-- ── RECONHECIMENTO ── -->
     <div id="tab-reconhecimento" class="tab-panel" role="tabpanel">
-      <div class="section-eyebrow">Reconhecimento</div>
-      <div class="section-title">Prêmios & menções</div>
-      <a class="award-card" href="https://www.instagram.com/p/C0EtkPuLNre/" target="_blank" rel="noopener">
-        <div class="award-icon-wrap"><i class="ti ti-award"></i></div>
-        <div class="award-body">
-          <div class="award-title">Prêmio Asas de Ouro 2023</div>
-          <div class="award-desc">Vencedor na categoria literatura</div>
+      <div class="tab-inner">
+        <div class="section-eyebrow">Reconhecimento</div>
+        <div class="section-title">Prêmios & menções</div>
+        <a class="award-card" href="https://www.instagram.com/p/C0EtkPuLNre/" target="_blank" rel="noopener">
+          <div class="award-icon-wrap"><i class="ti ti-award"></i></div>
+          <div class="award-body">
+            <div class="award-title">Prêmio Asas de Ouro 2023</div>
+            <div class="award-desc">Vencedor na categoria literatura</div>
+          </div>
+          <div class="award-right">
+            <span class="award-year">2023</span>
+            <i class="ti ti-chevron-right" style="color:var(--tt);font-size:13px"></i>
+          </div>
+        </a>
+        <div class="award-note">
+          <em>Selva de Pedra</em> também foi destaque em resenhas literárias e portais especializados, como o PublishNews e o Blog Leiturinha — que elegeu a série Giovana entre os 30 melhores livros infantis de 2021.
         </div>
-        <div class="award-right">
-          <span class="award-year">2023</span>
-          <i class="ti ti-chevron-right" style="color:var(--tt);font-size:13px"></i>
-        </div>
-      </a>
-      <div class="award-note">
-        <em>Selva de Pedra</em> também foi destaque em resenhas literárias e portais especializados, como o PublishNews e o Blog Leiturinha — que elegeu a série Giovana entre os 30 melhores livros infantis de 2021.
       </div>
     </div>
 
     <!-- ── NA MÍDIA ── -->
     <div id="tab-midia" class="tab-panel" role="tabpanel">
-      <div class="section-eyebrow">Imprensa</div>
-      <div class="section-title">Na mídia</div>
-      <div class="list-group">
-        <a class="list-row" href="https://www.lovemybookss.com/2023/12/resenha-selva-de-pedra.html" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-news"></i></div>
-          <div class="list-body"><div class="list-title">Resenha — Selva de Pedra</div><div class="list-source">lovemybookss.com</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="https://www.lovemybookss.com/2024/02/resenha-cronicas-para-casais-quase.html" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-news"></i></div>
-          <div class="list-body"><div class="list-title">Resenha — Crônicas para Casais Quase Modernos</div><div class="list-source">lovemybookss.com</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="https://www.publishnews.com.br/materias/2023/03/22/cronicas-sobre-familia" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-news"></i></div>
-          <div class="list-body"><div class="list-title">Crônicas sobre família</div><div class="list-source">PublishNews</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="https://mutantexis.wordpress.com/2023/10/24/dica-literaria-41-2023-assassinato-no-alto-leblon/" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-news"></i></div>
-          <div class="list-body"><div class="list-title">Dica literária — Assassinato no Alto Leblon</div><div class="list-source">mutantexis.wordpress.com</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="https://leiturinha.com.br/blog/os-30-melhores-livros-infantis-de-2021/" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-news"></i></div>
-          <div class="list-body"><div class="list-title">30 melhores livros infantis de 2021</div><div class="list-source">Blog Leiturinha</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="http://canalinfantil.com.br/viagens-de-giovana/" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-news"></i></div>
-          <div class="list-body"><div class="list-title">Viagens de Giovana — Canal Infantil</div><div class="list-source">canalinfantil.com.br</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="https://medium.com/@deliogalvao" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-pencil"></i></div>
-          <div class="list-body"><div class="list-title">Meus textos no Medium</div><div class="list-source">medium.com</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
+      <div class="tab-inner">
+        <div class="section-eyebrow">Imprensa</div>
+        <div class="section-title">Na mídia</div>
+        <div class="list-group">
+          <a class="list-row" href="https://www.lovemybookss.com/2023/12/resenha-selva-de-pedra.html" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Resenha — Selva de Pedra</div><div class="list-source">lovemybookss.com</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://www.lovemybookss.com/2024/02/resenha-cronicas-para-casais-quase.html" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Resenha — Crônicas para Casais Quase Modernos</div><div class="list-source">lovemybookss.com</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://www.publishnews.com.br/materias/2023/03/22/cronicas-sobre-familia" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Crônicas sobre família</div><div class="list-source">PublishNews</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://mutantexis.wordpress.com/2023/10/24/dica-literaria-41-2023-assassinato-no-alto-leblon/" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Dica literária — Assassinato no Alto Leblon</div><div class="list-source">mutantexis.wordpress.com</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://leiturinha.com.br/blog/os-30-melhores-livros-infantis-de-2021/" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">30 melhores livros infantis de 2021</div><div class="list-source">Blog Leiturinha</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="http://canalinfantil.com.br/viagens-de-giovana/" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Viagens de Giovana — Canal Infantil</div><div class="list-source">canalinfantil.com.br</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://medium.com/@deliogalvao" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-pencil"></i></div>
+            <div class="list-body"><div class="list-title">Meus textos no Medium</div><div class="list-source">medium.com</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- ── CONTATO ── -->
     <div id="tab-contato" class="tab-panel" role="tabpanel">
-      <div class="section-eyebrow">Fale comigo</div>
-      <div class="section-title">Contato</div>
-      <p class="contact-intro">Para parcerias, eventos ou só para trocar uma ideia sobre livros — manda uma mensagem.</p>
+      <div class="tab-inner">
+        <div class="section-eyebrow">Fale comigo</div>
+        <div class="section-title">Contato</div>
+        <p class="contact-intro">Para parcerias, eventos ou só para trocar uma ideia sobre livros — manda uma mensagem.</p>
 
-      <div id="form-wrap">
-        <div class="form-group">
-          <input  class="form-input"    id="f-nome"  type="text"  placeholder="Seu nome" />
-          <input  class="form-input"    id="f-email" type="email" placeholder="Seu e-mail" />
-          <textarea class="form-textarea" id="f-msg" rows="5"     placeholder="Sua mensagem..."></textarea>
+        <div id="form-wrap">
+          <div class="form-group">
+            <input  class="form-input"    id="f-nome"  type="text"  placeholder="Seu nome" />
+            <input  class="form-input"    id="f-email" type="email" placeholder="Seu e-mail" />
+            <textarea class="form-textarea" id="f-msg" rows="5"     placeholder="Sua mensagem..."></textarea>
+          </div>
+          <button class="submit-btn" id="submit-btn" disabled>Enviar mensagem</button>
         </div>
-        <button class="submit-btn" id="submit-btn" disabled>Enviar mensagem</button>
-      </div>
 
-      <div class="sent-box" id="sent-box">
-        <i class="ti ti-circle-check sent-icon"></i>
-        <div class="sent-title">Mensagem preparada!</div>
-        <div class="sent-sub">Seu cliente de e-mail foi aberto com a mensagem pronta.</div>
-        <button class="reset-btn" id="reset-btn">Enviar outra</button>
-      </div>
+        <div class="sent-box" id="sent-box">
+          <i class="ti ti-circle-check sent-icon"></i>
+          <div class="sent-title">Mensagem preparada!</div>
+          <div class="sent-sub">Seu cliente de e-mail foi aberto com a mensagem pronta.</div>
+          <button class="reset-btn" id="reset-btn">Enviar outra</button>
+        </div>
 
-      <div class="socials-list list-group">
-        <a class="list-row" href="https://www.instagram.com/deliogalvao/" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-brand-instagram"></i></div>
-          <div class="list-body"><div class="list-title">Instagram</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="https://www.tiktok.com/@deliogalvao" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-brand-tiktok"></i></div>
-          <div class="list-body"><div class="list-title">TikTok</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="https://www.facebook.com/deliogalvaooficial" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-brand-facebook"></i></div>
-          <div class="list-body"><div class="list-title">Facebook</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="https://www.linkedin.com/in/deliogalvao" target="_blank" rel="noopener">
-          <div class="list-icon"><i class="ti ti-brand-linkedin"></i></div>
-          <div class="list-body"><div class="list-title">LinkedIn</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
-        <a class="list-row" href="mailto:contato@deliogalvao.com.br">
-          <div class="list-icon"><i class="ti ti-mail"></i></div>
-          <div class="list-body"><div class="list-title">E-mail</div></div>
-          <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
-        </a>
+        <div class="socials-list list-group">
+          <a class="list-row" href="https://www.instagram.com/deliogalvao/" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-brand-instagram"></i></div>
+            <div class="list-body"><div class="list-title">Instagram</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://www.tiktok.com/@deliogalvao" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-brand-tiktok"></i></div>
+            <div class="list-body"><div class="list-title">TikTok</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://www.facebook.com/deliogalvaooficial" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-brand-facebook"></i></div>
+            <div class="list-body"><div class="list-title">Facebook</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://www.linkedin.com/in/deliogalvao" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-brand-linkedin"></i></div>
+            <div class="list-body"><div class="list-title">LinkedIn</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="mailto:contato@deliogalvao.com.br">
+            <div class="list-icon"><i class="ti ti-mail"></i></div>
+            <div class="list-body"><div class="list-title">E-mail</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+        </div>
       </div>
     </div>
 
   </div><!-- /content -->
 
 <script>
+const CAT_COLOR = {
+  "Romance Policial": "#1E3A5F",
+  "Crônicas":         "#6B8E7A",
+  "Suspense":         "#7A1F2B",
+  "Infantojuvenil":   "#F59E0B",
+};
+
 const AMZN = asin => `https://images-na.ssl-images-amazon.com/images/P/${asin}.01.LZZZZZZZ.jpg`;
 const OLIB  = isbn => `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`;
 
@@ -590,6 +630,7 @@ function renderCarousel() {
   const coverBg = isDark() ? '#2a2a2e' : null;
 
   carousel.innerHTML = filtered.map(book => {
+    const accent  = CAT_COLOR[book.category] || book.accent;
     const initials = book.title.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
     const coverHTML = book.cover
       ? `<img
@@ -598,15 +639,15 @@ function renderCarousel() {
            style="width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:10px;display:block;"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
          />
-         <div class="book-cover" style="display:none;background:${coverBg || book.color};border:1.5px solid ${book.accent}22">
-           <div class="book-spine" style="background:${book.accent}"></div>
-           <div class="book-initials" style="color:${book.accent}">${initials}</div>
-           <div class="book-cat-label" style="color:${book.accent}">${book.category}</div>
+         <div class="book-cover" style="display:none;background:${coverBg || book.color};border:1.5px solid ${accent}22">
+           <div class="book-spine" style="background:${accent}"></div>
+           <div class="book-initials" style="color:${accent}">${initials}</div>
+           <div class="book-cat-label" style="color:${accent}">${book.category}</div>
          </div>`
-      : `<div class="book-cover" style="background:${coverBg || book.color};border:1.5px solid ${book.accent}22">
-           <div class="book-spine" style="background:${book.accent}"></div>
-           <div class="book-initials" style="color:${book.accent}">${initials}</div>
-           <div class="book-cat-label" style="color:${book.accent}">${book.category}</div>
+      : `<div class="book-cover" style="background:${coverBg || book.color};border:1.5px solid ${accent}22">
+           <div class="book-spine" style="background:${accent}"></div>
+           <div class="book-initials" style="color:${accent}">${initials}</div>
+           <div class="book-cat-label" style="color:${accent}">${book.category}</div>
          </div>`;
     return `
       <div class="book-card">
@@ -615,7 +656,7 @@ function renderCarousel() {
           ${coverHTML}
         </div>
         <div class="book-info">
-          <div class="book-category" style="color:${book.accent}">${book.category}</div>
+          <div class="book-category" style="color:${accent}">${book.category}</div>
           <div class="book-title">${book.title}</div>
           <div class="book-desc">${book.description}</div>
         </div>
