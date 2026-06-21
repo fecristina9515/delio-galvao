@@ -40,7 +40,7 @@
 
     /* ── HERO ── */
     .hero {
-      max-width: 680px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 36px 24px 0;
       display: flex;
@@ -76,7 +76,8 @@
     }
     .author-bio {
       font-size: 14px; color: var(--ts);
-      line-height: 1.6; max-width: 360px;
+      line-height: 1.6;
+      max-width: 90%;
       margin-bottom: 20px;
     }
     .socials {
@@ -123,7 +124,7 @@
     }
 
     /* ── CONTENT WRAPPER ── */
-    .content { max-width: 680px; margin: 0 auto; }
+    .content { max-width: 1080px; margin: 0 auto; }
     .tab-panel { display: none; padding: 32px 24px 48px; }
     .tab-panel.active { display: block; }
 
@@ -194,16 +195,7 @@
       display: flex; flex-direction: column; gap: 10px;
     }
     .book-cover-wrap { position: relative; }
-    .wish-btn {
-      position: absolute; top: 8px; left: 8px; z-index: 2;
-      width: 28px; height: 28px; border-radius: 50%;
-      background: var(--surface); border: .5px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--tt);
-      transition: color .15s;
-      font-size: 13px;
-    }
-    .wish-btn.active { color: #ef4444; }
+
     .featured-badge {
       position: absolute; top: 8px; right: 8px; z-index: 2;
       background: var(--surface); border: .5px solid var(--border);
@@ -360,9 +352,13 @@
     <button class="theme-btn" id="theme-btn" aria-label="Alternar tema">
       <i class="ti ti-moon" id="theme-icon" style="font-size:15px"></i>
     </button>
-    <div class="avatar">DG</div>
+    <img
+      src="https://m.media-amazon.com/images/S/amzn-author-media-prod/fkkkqph6got6iqud3er0umuqsh._SX300_CR0%2C0%2C300%2C300_.jpg"
+      alt="Délio Galvão"
+      style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:.5px solid var(--border);margin-bottom:14px;"
+    />
     <div class="author-name">Délio Galvão</div>
-    <p class="author-bio">Escritor carioca — autor de romances,<br>infantojuvenis e contos variados.</p>
+    <p class="author-bio">Escritor carioca — autor de romances, infantojuvenis e contos variados.</p>
     <div class="socials">
       <a class="social-btn" href="https://www.instagram.com/deliogalvao/" target="_blank" rel="noopener" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
       <a class="social-btn" href="https://www.tiktok.com/@deliogalvao" target="_blank" rel="noopener" aria-label="TikTok"><i class="ti ti-brand-tiktok"></i></a>
@@ -551,7 +547,6 @@ const books = [
   { id:10, title:"Melhor do Crime Nacional — Vol. 2",                  category:"Suspense",       description:"Uma antologia reunindo os melhores contos de crime escritos no Brasil.",          color:"#faf5ff", accent:"#5b21b6", featured:false, cover: "https://luvaeditora.com.br/wp-content/uploads/2025/10/CRIME2.webp", link:"https://luvaeditora.com.br/produto/melhor-do-crime-nacional-v-2/" },
 ];
 
-let wishlist = [];
 let currentCat = "Todos";
 const isDark = () => document.body.classList.contains('dark');
 
@@ -591,14 +586,11 @@ document.getElementById('next-btn').addEventListener('click', () => carousel.scr
 
 function renderCarousel() {
   const filtered = currentCat === 'Todos' ? books : books.filter(b => b.category === currentCat);
-  const bg = isDark() ? '#09090b' : '#fafaf9';
-  const surface = isDark() ? '#18181b' : '#ffffff';
   const border  = isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)';
   const coverBg = isDark() ? '#2a2a2e' : null;
 
   carousel.innerHTML = filtered.map(book => {
     const initials = book.title.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-    const wished   = wishlist.includes(book.id);
     const coverHTML = book.cover
       ? `<img
            src="${book.cover}"
@@ -619,9 +611,6 @@ function renderCarousel() {
     return `
       <div class="book-card">
         <div class="book-cover-wrap">
-          <button class="wish-btn ${wished ? 'active' : ''}" data-id="${book.id}" aria-label="Favoritar">
-            <i class="ti ${wished ? 'ti-heart-filled' : 'ti-heart'}"></i>
-          </button>
           ${book.featured ? '<div class="featured-badge">Destaque</div>' : ''}
           ${coverHTML}
         </div>
@@ -636,15 +625,6 @@ function renderCarousel() {
         </a>
       </div>`;
   }).join('');
-
-  // wishlist toggle
-  carousel.querySelectorAll('.wish-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = +btn.dataset.id;
-      wishlist = wishlist.includes(id) ? wishlist.filter(x=>x!==id) : [...wishlist, id];
-      renderCarousel();
-    });
-  });
 }
 renderCarousel();
 
