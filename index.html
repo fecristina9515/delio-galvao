@@ -393,7 +393,7 @@
         </div>
         <div class="filter-pills" id="filter-pills">
           <button class="filter-pill active" data-cat="Todos">Todos</button>
-          <button class="filter-pill" data-cat="Romance">Romance</button>
+          <button class="filter-pill" data-cat="Romance Policial">Romance Policial</button>
           <button class="filter-pill" data-cat="Crônicas">Crônicas</button>
           <button class="filter-pill" data-cat="Suspense">Suspense</button>
           <button class="filter-pill" data-cat="Infantojuvenil">Infantojuvenil</button>
@@ -535,13 +535,20 @@
   </div><!-- /content -->
 
 <script>
+const AMZN = asin => `https://images-na.ssl-images-amazon.com/images/P/${asin}.01.LZZZZZZZ.jpg`;
+const OLIB  = isbn => `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`;
+
 const books = [
-  { id:1, title:"Selva de Pedra",       category:"Romance",       description:"Um romance urbano que mergulha nas profundezas da cidade e dos seus segredos.", color:"#e8f0fe", accent:"#1a56db", featured:true,  link:"https://www.amazon.com.br/Selva-Pedra-D%C3%A9lio-Galv%C3%A3o/dp/6525496810/" },
-  { id:2, title:"Crônicas para Casais Quase Modernos", category:"Crônicas", description:"Histórias bem-humoradas sobre os desafios do amor contemporâneo.", color:"#fdf2f8", accent:"#9d174d", featured:false, link:"https://www.amazon.com.br/dp/B0D7MWJKG5" },
-  { id:3, title:"Navalha, Veneno, Mistério", category:"Suspense", description:"Uma trama de crime e intriga que prende o leitor até a última página.", color:"#fff7ed", accent:"#c2410c", featured:true,  link:"https://www.editorametamorfose.com.br/1056850/navalha-veneno-misterio" },
-  { id:4, title:"Diário das Fantásticas Viagens de Giovana — Vol. 1", category:"Infantojuvenil", description:"A aventura começa! Giovana embarca em viagens cheias de descobertas.", color:"#f0fdf4", accent:"#166534", featured:false, link:"https://amzn.to/4hdtaXl" },
-  { id:5, title:"Diário das Fantásticas Viagens de Giovana — Vol. 2", category:"Infantojuvenil", description:"A aventura continua em novos destinos e novas amizades.", color:"#faf5ff", accent:"#6b21a8", featured:false, link:"https://amzn.to/4hdtaXl" },
-  { id:6, title:"A Última Lua Azul", category:"Romance", description:"Uma história de amor marcada por encontros raros e momentos únicos.", color:"#eff6ff", accent:"#1e40af", featured:true,  link:"https://www.amazon.com.br" },
+  { id:1,  title:"Selva de Pedra",                                    category:"Romance Policial", description:"Um romance urbano que mergulha nas profundezas da cidade e dos seus segredos.",    color:"#e8f0fe", accent:"#1a56db", featured:true,  cover: AMZN("B0DMFZVR8Q"), link:"https://www.amazon.com.br/dp/B0DMFZVR8Q" },
+  { id:2,  title:"Crônicas para Casais Quase Modernos",               category:"Crônicas",       description:"Histórias bem-humoradas sobre os desafios do amor contemporâneo.",                 color:"#fdf2f8", accent:"#9d174d", featured:false, cover: AMZN("B0D7MWJKG5"), link:"https://www.amazon.com.br/dp/B0D7MWJKG5" },
+  { id:3,  title:"Navalha, Veneno, Mistério",                         category:"Suspense",       description:"Uma coletânea de contos policiais, de suspense e investigação.",                   color:"#fff7ed", accent:"#c2410c", featured:true,  cover: null,               link:"https://www.editorametamorfose.com.br/1056850/navalha-veneno-misterio" },
+  { id:4,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 1",category:"Infantojuvenil", description:"A aventura começa! Giovana embarca em viagens cheias de descobertas.",            color:"#f0fdf4", accent:"#166534", featured:false, cover: AMZN("B0B51TT4W3"), link:"https://www.amazon.com.br/dp/B0B51TT4W3" },
+  { id:5,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 2",category:"Infantojuvenil", description:"A aventura continua em novos destinos e novas amizades.",                         color:"#faf5ff", accent:"#6b21a8", featured:false, cover: AMZN("B0B7FH27FP"), link:"https://www.amazon.com.br/dp/B0B7FH27FP" },
+  { id:6,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 3",category:"Infantojuvenil", description:"Novas terras, novos desafios e muita imaginação na terceira aventura de Giovana.", color:"#fff7ed", accent:"#b45309", featured:false, cover: AMZN("B0BCFF8MS5"), link:"https://www.amazon.com.br/dp/B0BCFF8MS5" },
+  { id:7,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 4",category:"Infantojuvenil", description:"A série favorita das crianças segue com ainda mais magia e aventura.",             color:"#fdf2f8", accent:"#be185d", featured:false, cover: AMZN("B0BMXSZV1F"), link:"https://www.amazon.com.br/dp/B0BMXSZV1F" },
+  { id:8,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 5",category:"Infantojuvenil", description:"O gran finale das aventuras de Giovana em uma jornada inesquecível.",             color:"#f0fdf4", accent:"#065f46", featured:false, cover: OLIB("8569470762"),  link:"https://www.amazon.com.br" },
+  { id:9,  title:"A Última Lua Azul",                                  category:"Romance Policial", description:"Uma história de amor marcada por encontros raros e momentos únicos.",             color:"#eff6ff", accent:"#1e40af", featured:true,  cover: AMZN("B0GL3K3TZ6"), link:"https://www.amazon.com.br/dp/B0GL3K3TZ6" },
+  { id:10, title:"Melhor do Crime Nacional — Vol. 2",                  category:"Suspense",       description:"Uma antologia reunindo os melhores contos de crime escritos no Brasil.",          color:"#faf5ff", accent:"#5b21b6", featured:false, cover: null,               link:"https://luvaeditora.com.br/produto/melhor-do-crime-nacional-v-2/" },
 ];
 
 let wishlist = [];
@@ -592,6 +599,23 @@ function renderCarousel() {
   carousel.innerHTML = filtered.map(book => {
     const initials = book.title.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
     const wished   = wishlist.includes(book.id);
+    const coverHTML = book.cover
+      ? `<img
+           src="${book.cover}"
+           alt="Capa de ${book.title}"
+           style="width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:10px;display:block;"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+         />
+         <div class="book-cover" style="display:none;background:${coverBg || book.color};border:1.5px solid ${book.accent}22">
+           <div class="book-spine" style="background:${book.accent}"></div>
+           <div class="book-initials" style="color:${book.accent}">${initials}</div>
+           <div class="book-cat-label" style="color:${book.accent}">${book.category}</div>
+         </div>`
+      : `<div class="book-cover" style="background:${coverBg || book.color};border:1.5px solid ${book.accent}22">
+           <div class="book-spine" style="background:${book.accent}"></div>
+           <div class="book-initials" style="color:${book.accent}">${initials}</div>
+           <div class="book-cat-label" style="color:${book.accent}">${book.category}</div>
+         </div>`;
     return `
       <div class="book-card">
         <div class="book-cover-wrap">
@@ -599,11 +623,7 @@ function renderCarousel() {
             <i class="ti ${wished ? 'ti-heart-filled' : 'ti-heart'}"></i>
           </button>
           ${book.featured ? '<div class="featured-badge">Destaque</div>' : ''}
-          <div class="book-cover" style="background:${coverBg || book.color}; border:1.5px solid ${book.accent}22">
-            <div class="book-spine" style="background:${book.accent}"></div>
-            <div class="book-initials" style="color:${book.accent}">${initials}</div>
-            <div class="book-cat-label" style="color:${book.accent}">${book.category}</div>
-          </div>
+          ${coverHTML}
         </div>
         <div class="book-info">
           <div class="book-category" style="color:${book.accent}">${book.category}</div>
