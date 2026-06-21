@@ -188,38 +188,26 @@
       border-color: transparent;
     }
 
-    /* ── CAROUSEL ── */
-    .carousel-wrap { position: relative; padding: 4px 0 32px; }
-    .carousel-btn {
-      position: absolute; top: 40%; transform: translateY(-50%);
-      z-index: 10; width: 34px; height: 34px;
-      border-radius: 50%;
-      background: var(--surface); border: .5px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--ts);
-      transition: border-color .15s;
+    /* ── BOOKS GRID ── */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 8px 24px 32px;
     }
-    .carousel-btn:hover { border-color: var(--tp); }
-    .carousel-btn.prev { left: 6px; }
-    .carousel-btn.next { right: 6px; }
-    .carousel {
-      display: flex; gap: 14px;
-      padding: 8px 52px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
+    @media (max-width: 640px) {
+      .books-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 8px 16px 32px; }
     }
-    .carousel::-webkit-scrollbar { display: none; }
+    @media (min-width: 641px) and (max-width: 860px) {
+      .books-grid { grid-template-columns: repeat(3, 1fr); }
+    }
 
     /* ── BOOK CARD ── */
     .book-card {
-      min-width: 200px; max-width: 200px;
       background: var(--surface);
       border-radius: 16px;
       border: .5px solid var(--border);
       padding: 14px;
-      scroll-snap-align: start;
-      flex-shrink: 0;
       display: flex; flex-direction: column; gap: 10px;
     }
     .book-cover-wrap { position: relative; }
@@ -481,11 +469,7 @@
           <button class="filter-pill" data-cat="Infantojuvenil"   style="--cat:#F59E0B">Infantojuvenil</button>
         </div>
       </div>
-      <div class="carousel-wrap">
-        <button class="carousel-btn prev" id="prev-btn" aria-label="Anterior"><i class="ti ti-chevron-left"></i></button>
-        <button class="carousel-btn next" id="next-btn" aria-label="Próximo"><i class="ti ti-chevron-right"></i></button>
-        <div class="carousel" id="carousel"></div>
-      </div>
+      <div class="books-grid" id="books-grid"></div>
     </div>
 
     <!-- ── SOBRE ── -->
@@ -681,22 +665,19 @@ document.querySelectorAll('.filter-pill').forEach(btn => {
     document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentCat = btn.dataset.cat;
-    renderCarousel();
+    renderGrid();
   });
 });
 
-// ── Carousel ──
-const carousel = document.getElementById('carousel');
-document.getElementById('prev-btn').addEventListener('click', () => carousel.scrollBy({ left: -252, behavior: 'smooth' }));
-document.getElementById('next-btn').addEventListener('click', () => carousel.scrollBy({ left:  252, behavior: 'smooth' }));
+// ── Books grid ──
+const grid = document.getElementById('books-grid');
 
-function renderCarousel() {
+function renderGrid() {
   const filtered = currentCat === 'Todos' ? books : books.filter(b => b.category === currentCat);
-  const border  = isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)';
   const coverBg = isDark() ? '#2a2a2e' : null;
 
-  carousel.innerHTML = filtered.map(book => {
-    const accent  = CAT_COLOR[book.category] || book.accent;
+  grid.innerHTML = filtered.map(book => {
+    const accent   = CAT_COLOR[book.category] || book.accent;
     const initials = book.title.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
     const coverHTML = book.cover
       ? `<img
@@ -733,7 +714,7 @@ function renderCarousel() {
       </div>`;
   }).join('');
 }
-renderCarousel();
+renderGrid();
 
 // ── Contact form ──
 const nome    = document.getElementById('f-nome');
