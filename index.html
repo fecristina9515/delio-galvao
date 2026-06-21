@@ -21,6 +21,7 @@
       --tp:      #09090b;
       --ts:      #71717a;
       --tt:      #a1a1aa;
+      --title:   #3730A3;
     }
     body.dark {
       --bg:      #09090b;
@@ -30,6 +31,7 @@
       --tp:      #fafafa;
       --ts:      #a1a1aa;
       --tt:      #52525b;
+      --title:   #818cf8;
     }
 
     body {
@@ -74,7 +76,7 @@
     }
     .author-name {
       font-size: 26px; font-weight: 700;
-      letter-spacing: -.3px; color: var(--tp);
+      letter-spacing: -.3px; color: var(--title);
       margin-bottom: 6px;
     }
     .author-bio {
@@ -91,14 +93,14 @@
     .social-btn {
       width: 36px; height: 36px;
       border-radius: 50%;
-      background: var(--surface);
-      border: .5px solid var(--border);
+      background: var(--title);
+      border: .5px solid var(--title);
       display: flex; align-items: center; justify-content: center;
-      color: var(--ts); text-decoration: none;
-      transition: border-color .15s, color .15s;
+      color: #fff; text-decoration: none;
+      transition: opacity .15s;
       font-size: 16px;
     }
-    .social-btn:hover { border-color: var(--tp); color: var(--tp); }
+    .social-btn:hover { opacity: .8; }
 
     /* ── NAV TABS ── */
     .nav-tabs {
@@ -122,8 +124,8 @@
       margin-bottom: -1px;
     }
     .nav-tab.active {
-      color: var(--tp); font-weight: 600;
-      border-bottom-color: var(--tp);
+      color: var(--title); font-weight: 600;
+      border-bottom-color: var(--title);
     }
 
     /* ── CONTENT WRAPPER ── */
@@ -140,7 +142,7 @@
     }
     .section-title {
       font-size: 22px; font-weight: 700;
-      color: var(--tp); margin-bottom: 20px;
+      color: var(--title); margin-bottom: 20px;
     }
     .book-eyebrow {
       font-size: 11px; font-weight: 600;
@@ -149,7 +151,7 @@
     }
     .book-title-heading {
       font-size: 22px; font-weight: 700;
-      color: var(--tp); margin-bottom: 0;
+      color: var(--title); margin-bottom: 0;
     }
 
     /* ── BOOK FILTERS ── */
@@ -180,7 +182,7 @@
     }
     .filter-pill.active[style*="--cat"]::before { opacity: 1; }
     .filter-pill.active {
-      background: var(--tp); color: var(--bg);
+      background: var(--title); color: #fff;
       border-color: transparent;
     }
     .filter-pill[style*="--cat"].active {
@@ -255,7 +257,7 @@
     .buy-btn {
       display: flex; align-items: center; justify-content: center; gap: 6px;
       padding: 9px 0; border-radius: 100px;
-      background: var(--tp); color: var(--bg);
+      background: var(--title); color: #fff;
       font-size: 12px; font-weight: 600;
       text-decoration: none; margin-top: 2px;
       font-family: 'Geist', sans-serif;
@@ -360,14 +362,14 @@
       resize: none;
     }
     .form-input:focus, .form-textarea:focus {
-      border-color: var(--tp);
-      box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+      border-color: var(--title);
+      box-shadow: 0 0 0 3px rgba(55,48,163,0.08);
     }
     .form-input::placeholder, .form-textarea::placeholder { color: var(--tt); }
     .submit-btn {
       width: 100%; padding: 11px 0; margin-top: 4px;
       border-radius: 10px;
-      background: var(--tp); color: var(--bg);
+      background: var(--title); color: #fff;
       font-size: 13px; font-weight: 600;
       border: none; cursor: pointer;
       font-family: 'Geist', sans-serif;
