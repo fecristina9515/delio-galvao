@@ -5,893 +5,763 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Délio Galvão — Escritor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init('mXb4JiU1dsjqPSOEW');</script>
   <style>
-    :root {
-      --azul-atlantico: #2F566B;
-      --azul-bruma: #A9BEC9;
-      --marfim-papel: #FAF7F1;
-      --areia-clara: #E9DCC8;
-      --areia-dourada: #D4B994;
-      --text-primary: #1a1a1a;
-      --text-secondary: #666666;
-      --border-color: rgba(0,0,0,0.08);
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg:      #FAF7F1;
+      --surface: #ffffff;
+      --sur2:    #E9DCC8;
+      --border:  rgba(47,86,107,0.12);
+      --tp:      #2F566B;
+      --ts:      #2F566B;
+      --tt:      #A9BEC9;
+      --title:   #2F566B;
+      --accent:  #D4B994;
+    }
+    body.dark {
+      --bg:      #1a2530;
+      --surface: #213040;
+      --sur2:    #2a3d4d;
+      --border:  rgba(169,190,201,0.15);
+      --tp:      #FAF7F1;
+      --ts:      #A9BEC9;
+      --tt:      #4a6070;
+      --title:   #A9BEC9;
+      --accent:  #D4B994;
     }
 
     body {
-      font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--marfim-papel);
-      color: var(--text-primary);
-      line-height: 1.6;
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--tp);
       -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      transition: background .3s, color .3s;
     }
 
-    /* ── SVG WAVES ── */
-    .waves-top {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 300px;
-      height: 150px;
-      opacity: 0.3;
-      pointer-events: none;
-    }
-
-    .waves-bottom {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 300px;
-      height: 120px;
-      opacity: 0.25;
-      pointer-events: none;
-    }
-
-    /* ── HEADER ── */
-    header {
-      position: relative;
-      padding: 60px 24px 80px;
-      text-align: center;
-      border-bottom: 1px solid var(--border-color);
-      background: linear-gradient(180deg, var(--marfim-papel) 0%, rgba(217, 204, 200, 0.3) 100%);
-    }
-
-    .logo-section {
-      margin-bottom: 32px;
-    }
-
-    .author-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: var(--azul-atlantico);
-      border: 1px solid var(--border-color);
-      margin: 0 auto 16px;
+    /* ── HERO ── */
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 36px 24px 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 44px;
-      font-weight: 700;
+      text-align: center;
+      position: relative;
     }
-
+    .theme-btn {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--sur2);
+      border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--ts);
+      transition: background .15s;
+    }
+    .avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--sur2);
+      border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 400; color: var(--ts);
+      margin-bottom: 14px;
+    }
     .author-name {
-      font-size: 42px;
-      font-weight: 700;
-      color: var(--azul-atlantico);
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-      font-style: italic;
+      font-size: 26px; font-weight: 900;
+      letter-spacing: -.3px; color: var(--title);
+      margin-bottom: 6px;
     }
-
-    .author-title {
-      font-size: 16px;
-      color: var(--text-secondary);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 400;
-    }
-
     .author-bio {
-      font-size: 15px;
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 20px auto 0;
-      line-height: 1.7;
+      font-size: 14px; color: var(--ts);
+      line-height: 1.6;
+      max-width: 90%;
+      margin-bottom: 20px;
+      font-weight: 300;
     }
+    .socials {
+      display: flex; gap: 8px;
+      flex-wrap: wrap; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .social-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--title);
+      border: .5px solid var(--title);
+      display: flex; align-items: center; justify-content: center;
+      color: #FAF7F1; text-decoration: none;
+      transition: opacity .15s;
+      font-size: 16px;
+    }
+    .social-btn:hover { opacity: .8; }
 
     /* ── NAV TABS ── */
-    .nav-tabs-wrapper {
+    .nav-tabs {
+      width: 100%;
       display: flex;
       justify-content: center;
-      gap: 0;
-      margin-top: 32px;
-      flex-wrap: wrap;
+      border-bottom: .5px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
     }
-
+    .nav-tabs::-webkit-scrollbar { display: none; }
     .nav-tab {
-      padding: 12px 28px;
-      background: transparent;
-      border: none;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      cursor: pointer;
+      padding: 10px 20px;
+      font-size: 13px; font-weight: 400;
+      color: var(--ts);
+      background: transparent; border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer; white-space: nowrap;
       font-family: 'Lato', sans-serif;
-      position: relative;
-      transition: color 0.2s;
+      transition: color .15s, border-color .15s;
+      margin-bottom: -1px;
     }
-
-    .nav-tab::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--areia-dourada);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .nav-tab:hover {
-      color: var(--azul-atlantico);
-    }
-
     .nav-tab.active {
-      color: var(--azul-atlantico);
-      font-weight: 700;
-    }
-
-    .nav-tab.active::after {
-      opacity: 1;
+      color: var(--title); font-weight: 700;
+      border-bottom-color: var(--accent);
     }
 
     /* ── CONTENT WRAPPER ── */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .content { max-width: 800px; margin: 0 auto; }
+    .tab-panel { display: none; padding: 0 0 48px; }
+    .tab-panel.active { display: block; }
+    .tab-inner { padding: 28px 24px 0; }
 
-    .content-area {
-      padding: 60px 0;
+    /* ── SECTION LABELS ── */
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 6px;
     }
-
-    .tab-panel {
-      display: none;
-    }
-
-    .tab-panel.active {
-      display: block;
-      animation: fadeIn 0.3s ease-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* ── SECTION TITLES ── */
-    .section-label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--areia-dourada);
-      margin-bottom: 12px;
-    }
-
     .section-title {
-      font-size: 36px;
-      font-weight: 700;
-      color: var(--azul-atlantico);
-      margin-bottom: 40px;
-      letter-spacing: -0.5px;
+      font-size: 22px; font-weight: 900;
+      color: var(--title); margin-bottom: 20px;
+      letter-spacing: -.2px;
+    }
+    .book-eyebrow {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 6px;
+    }
+    .book-title-heading {
+      font-size: 22px; font-weight: 900;
+      color: var(--title); margin-bottom: 0;
+      letter-spacing: -.2px;
+    }
+
+    /* ── BOOK FILTERS ── */
+    .book-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      padding: 28px 24px 12px;
+    }
+    .filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-pill {
+      padding: 5px 14px; border-radius: 100px;
+      border: .5px solid var(--border);
+      background: transparent; color: var(--ts);
+      font-size: 12px; font-weight: 500;
+      cursor: pointer; font-family: 'Lato', sans-serif;
+      transition: all .15s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .filter-pill[style*="--cat"]::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--cat);
+      flex-shrink: 0;
+      opacity: 0.6;
+      transition: opacity .15s;
+    }
+    .filter-pill.active[style*="--cat"]::before { opacity: 1; }
+    .filter-pill.active {
+      background: var(--title); color: #FAF7F1;
+      border-color: transparent;
+    }
+    .filter-pill[style*="--cat"].active {
+      background: var(--cat); color: #fff;
+      border-color: transparent;
     }
 
     /* ── BOOKS GRID ── */
-    .books-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-
-    .filter-group {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      padding: 6px 16px;
-      border-radius: 20px;
-      border: 1px solid var(--border-color);
-      background: transparent;
-      color: var(--text-secondary);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: 'Lato', sans-serif;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover {
-      border-color: var(--areia-dourada);
-      color: var(--azul-atlantico);
-    }
-
-    .filter-btn.active {
-      background: var(--azul-atlantico);
-      color: white;
-      border-color: var(--azul-atlantico);
-    }
-
     .books-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 24px;
-      margin-bottom: 60px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 8px 24px 32px;
+    }
+    @media (max-width: 640px) {
+      .books-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 8px 16px 32px; }
+    }
+    @media (min-width: 641px) and (max-width: 860px) {
+      .books-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
-    @media (max-width: 768px) {
-      .books-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 16px;
-      }
-    }
-
+    /* ── BOOK CARD ── */
     .book-card {
-      background: white;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
+      background: var(--surface);
+      border-radius: 16px;
+      border: .5px solid var(--border);
+      padding: 14px;
+      display: flex; flex-direction: column; gap: 10px;
     }
-
-    .book-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(47, 86, 107, 0.12);
-    }
-
-    .book-cover {
-      width: 100%;
-      aspect-ratio: 2/3;
-      background: linear-gradient(135deg, var(--azul-bruma) 0%, var(--areia-clara) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.4);
-      text-align: center;
-      padding: 20px;
-      position: relative;
-    }
-
-    .book-cover.featured {
-      background: linear-gradient(135deg, var(--azul-atlantico) 0%, var(--azul-bruma) 100%);
-    }
+    .book-cover-wrap { position: relative; }
 
     .featured-badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: var(--areia-dourada);
-      color: white;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      position: absolute; top: 8px; right: 8px; z-index: 2;
+      background: var(--surface); border: .5px solid var(--border);
+      border-radius: 100px; padding: 2px 7px;
+      font-size: 9px; font-weight: 600; color: var(--ts);
+      letter-spacing: .05em;
     }
-
-    .book-info {
-      padding: 16px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    .book-cover {
+      width: 100%; aspect-ratio: 2/3;
+      border-radius: 10px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      position: relative; overflow: hidden;
     }
-
+    .book-spine {
+      width: 4px; position: absolute;
+      left: 0; top: 0; bottom: 0;
+    }
+    .book-initials {
+      font-size: 26px; font-weight: 700;
+      opacity: .25;
+    }
+    .book-cat-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      opacity: .45; text-align: center;
+      padding: 0 14px;
+    }
+    .book-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
     .book-category {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--areia-dourada);
-      margin-bottom: 8px;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
     }
-
     .book-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--azul-atlantico);
-      margin-bottom: 8px;
-      line-height: 1.3;
+      font-size: 14px; font-weight: 900;
+      color: var(--title); line-height: 1.3;
     }
-
     .book-desc {
-      font-size: 13px;
-      color: var(--text-secondary);
-      flex: 1;
-      margin-bottom: 12px;
-      line-height: 1.5;
+      font-size: 11px; color: var(--ts); line-height: 1.5; flex: 1;
     }
-
-    .book-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 10px 16px;
-      border-radius: 6px;
-      background: var(--azul-atlantico);
-      color: white;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s;
+    .buy-btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 0; border-radius: 100px;
+      background: var(--title); color: #FAF7F1;
+      font-size: 12px; font-weight: 700;
+      text-decoration: none; margin-top: 2px;
       font-family: 'Lato', sans-serif;
+      transition: opacity .15s;
     }
+    .buy-btn:hover { opacity: .85; }
 
-    .book-btn:hover {
-      background: var(--azul-bruma);
-    }
-
-    /* ── ABOUT ── */
+    /* ── SOBRE ── */
     .about-text {
-      font-size: 15px;
+      font-size: 14px; color: var(--ts);
       line-height: 1.8;
-      color: var(--text-primary);
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      max-width: 800px;
+      display: flex; flex-direction: column; gap: 14px;
     }
+    .about-text em { font-style: italic; color: var(--tp); }
 
-    .about-text em {
-      color: var(--azul-atlantico);
-      font-style: italic;
-      font-weight: 600;
+    /* ── AWARD CARD ── */
+    .award-card {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 18px;
+      background: var(--surface);
+      border: .5px solid var(--border);
+      border-radius: 14px;
+      text-decoration: none; color: inherit;
+      margin-bottom: 12px;
+      transition: border-color .15s;
     }
-
-    /* ── AWARDS ── */
-    .awards-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      max-width: 700px;
+    .award-card:hover { border-color: var(--tp); }
+    .award-icon-wrap {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: #fff7ed; border: .5px solid #fed7aa;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 22px; color: #ea580c;
     }
+    .award-body { flex: 1; min-width: 0; }
+    .award-title { font-size: 14px; font-weight: 600; color: var(--tp); margin-bottom: 3px; }
+    .award-desc  { font-size: 12px; color: var(--ts); }
+    .award-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+    .award-year  { font-size: 11px; font-weight: 600; color: #ea580c; background: #fff7ed; padding: 2px 8px; border-radius: 100px; }
+    .award-note  { padding: 16px 18px; background: var(--sur2); border-radius: 14px; border: .5px solid var(--border); font-size: 12px; color: var(--ts); line-height: 1.7; }
+    .award-note em { font-style: italic; color: var(--tp); }
 
-    .award-item {
-      display: flex;
-      gap: 16px;
-      padding: 20px;
-      background: white;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      transition: border-color 0.2s;
+    /* ── MEDIA LIST ── */
+    .list-group {
+      background: var(--surface);
+      border-radius: 14px;
+      border: .5px solid var(--border);
+      overflow: hidden;
     }
-
-    .award-item:hover {
-      border-color: var(--areia-dourada);
+    .list-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 16px;
+      text-decoration: none; color: inherit;
+      border-bottom: .5px solid var(--border);
+      transition: background .12s;
     }
-
-    .award-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, rgba(212, 185, 148, 0.2), rgba(212, 185, 148, 0.1));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--areia-dourada);
-      font-size: 20px;
+    .list-row:last-child { border-bottom: none; }
+    .list-row:hover { background: var(--sur2); }
+    .list-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--sur2); border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 14px; color: var(--ts);
     }
+    .list-body { flex: 1; min-width: 0; }
+    .list-title { font-size: 13px; font-weight: 500; color: var(--tp); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .list-source { font-size: 11px; color: var(--tt); }
 
-    .award-content {
-      flex: 1;
-    }
-
-    .award-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--azul-atlantico);
-      margin-bottom: 4px;
-    }
-
-    .award-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .award-year {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--areia-dourada);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    /* ── MEDIA SECTION ── */
-    .media-links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-width: 700px;
-    }
-
-    .media-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      background: white;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      text-decoration: none;
-      color: var(--text-primary);
-      transition: border-color 0.2s;
-    }
-
-    .media-link:hover {
-      border-color: var(--areia-dourada);
-      color: var(--azul-atlantico);
-    }
-
-    .media-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
-      background: var(--areia-clara);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--azul-atlantico);
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-
-    .media-body {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .media-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 2px;
-    }
-
-    .media-source {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    /* ── CONTACT FORM ── */
-    .contact-wrapper {
-      max-width: 600px;
-      background: white;
-      border-radius: 16px;
-      border: 1px solid var(--border-color);
-      padding: 40px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-
-    .form-row {
+    /* ── CONTACT ── */
+    .contact-card {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      border-radius: 20px;
+      border: .5px solid var(--border);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     }
-
-    @media (max-width: 480px) {
-      .form-row {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 640px) {
+      .contact-card { grid-template-columns: 1fr; }
+      .contact-deco  { display: none; }
     }
-
+    .contact-form-side { padding: 32px; }
+    .contact-intro {
+      font-size: 13px; color: var(--ts);
+      margin-bottom: 24px; line-height: 1.6;
+    }
+    .form-label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: .05em; color: var(--ts);
+      margin-bottom: 6px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .form-field { margin-bottom: 12px; }
     .form-input, .form-textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background: var(--marfim-papel);
-      color: var(--text-primary);
-      font-size: 14px;
-      font-family: 'Lato', sans-serif;
-      outline: none;
-      transition: border-color 0.2s;
+      width: 100%; padding: 10px 13px;
+      border-radius: 10px;
+      border: .5px solid var(--border);
+      background: var(--sur2); color: var(--tp);
+      font-size: 13px; font-family: 'Lato', sans-serif;
+      outline: none; transition: border-color .15s, box-shadow .15s;
+      resize: none;
     }
-
     .form-input:focus, .form-textarea:focus {
-      border-color: var(--azul-atlantico);
+      border-color: var(--title);
+      box-shadow: 0 0 0 3px rgba(47,86,107,0.08);
     }
-
-    .form-input::placeholder, .form-textarea::placeholder {
-      color: var(--text-secondary);
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--tt); }
     .submit-btn {
-      width: 100%;
-      padding: 14px;
-      margin-top: 24px;
-      border-radius: 8px;
-      background: var(--azul-atlantico);
-      color: white;
-      font-size: 14px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
+      width: 100%; padding: 11px 0; margin-top: 4px;
+      border-radius: 10px;
+      background: var(--title); color: #FAF7F1;
+      font-size: 13px; font-weight: 700;
+      border: none; cursor: pointer;
       font-family: 'Lato', sans-serif;
-      transition: background 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      transition: opacity .15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-
-    .submit-btn:hover {
-      background: var(--azul-bruma);
+    .submit-btn:disabled { opacity: .35; cursor: default; }
+    .submit-btn:not(:disabled):hover { opacity: .85; }
+    .sent-box {
+      padding: 28px; text-align: center; display: none;
     }
-
-    .submit-btn:disabled {
-      opacity: 0.5;
-      cursor: default;
+    .sent-box.show { display: block; }
+    .sent-icon { font-size: 36px; color: #22c55e; display: block; margin-bottom: 12px; }
+    .sent-title { font-size: 15px; font-weight: 600; color: var(--tp); margin-bottom: 4px; }
+    .sent-sub   { font-size: 13px; color: var(--ts); }
+    .reset-btn  { margin-top: 16px; padding: 8px 20px; border-radius: 100px; border: .5px solid var(--border); background: transparent; color: var(--ts); font-size: 12px; cursor: pointer; font-family: 'Lato', sans-serif; }
+    .contact-deco {
+      background: linear-gradient(145deg, #2F566B 0%, #1d3d4f 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 32px; gap: 24px; position: relative; overflow: hidden;
     }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border-color);
-      padding: 32px 24px;
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 13px;
+    .deco-blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); opacity: .2; pointer-events: none;
     }
-
-    .footer-social {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 20px;
+    .deco-quote {
+      font-size: 15px; line-height: 1.7; color: rgba(250,247,241,0.85);
+      text-align: center; position: relative; z-index: 1;
+      font-style: italic; max-width: 220px;
+      font-weight: 300;
     }
-
-    .social-link {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--azul-atlantico);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      font-size: 16px;
-      transition: background 0.2s;
+    .deco-quote::before {
+      content: '"';
+      font-size: 48px; line-height: 1;
+      color: rgba(212,185,148,0.4);
+      display: block; margin-bottom: 8px;
+      font-style: normal; font-weight: 900;
     }
-
-    .social-link:hover {
-      background: var(--azul-bruma);
+    .deco-author {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent);
+      position: relative; z-index: 1;
     }
-
+    .deco-img {
+      width: 64px; height: 64px; border-radius: 50%;
+      object-fit: cover; border: 2px solid rgba(255,255,255,0.15);
+      position: relative; z-index: 1;
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <svg class="waves-top" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,25 Q25,15 50,25 T100,25" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-      <path d="M0,30 Q25,20 50,30 T100,30" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
-      <path d="M0,35 Q25,25 50,35 T100,35" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"/>
-    </svg>
-
-    <div class="logo-section">
-      <div class="author-avatar">D</div>
-      <h1 class="author-name">Délio Galvão</h1>
-      <p class="author-title">Escritor</p>
-      <p class="author-bio">Romances, crônicas, contos e literatura infantojuvenil — histórias que exploram o Brasil, os mistérios humanos e a imaginação.</p>
+  <!-- HERO -->
+  <div class="hero">
+    <button class="theme-btn" id="theme-btn" aria-label="Alternar tema">
+      <i class="ti ti-moon" id="theme-icon" style="font-size:15px"></i>
+    </button>
+    <img
+      src="https://m.media-amazon.com/images/S/amzn-author-media-prod/fkkkqph6got6iqud3er0umuqsh._SX300_CR0%2C0%2C300%2C300_.jpg"
+      alt="Délio Galvão"
+      style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:.5px solid var(--border);margin-bottom:14px;"
+    />
+    <div class="author-name">Délio Galvão</div>
+    <p class="author-bio">Escritor carioca — autor de romances, infantojuvenis e contos variados.</p>
+    <div class="socials">
+      <a class="social-btn" href="https://www.instagram.com/deliogalvao.escritor/" target="_blank" rel="noopener" aria-label="Instagram"><i class="ti ti-brand-instagram"></i></a>
+      <a class="social-btn" href="https://www.tiktok.com/@deliogalvao" target="_blank" rel="noopener" aria-label="TikTok"><i class="ti ti-brand-tiktok"></i></a>
+      <a class="social-btn" href="https://www.facebook.com/deliogalvao.escritor/" target="_blank" rel="noopener" aria-label="Facebook"><i class="ti ti-brand-facebook"></i></a>
+      <a class="social-btn" href="https://www.linkedin.com/in/deliogalvao-escritor/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ti ti-brand-linkedin"></i></a>
     </div>
 
-    <nav class="nav-tabs-wrapper">
-      <button class="nav-tab active" data-tab="livros">Livros</button>
-      <button class="nav-tab" data-tab="sobre">Sobre mim</button>
-      <button class="nav-tab" data-tab="reconhecimento">Reconhecimento</button>
-      <button class="nav-tab" data-tab="midia">Na mídia</button>
-      <button class="nav-tab" data-tab="contato">Contato</button>
+    <!-- NAV TABS -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-tab="home"           role="tab">Livros</button>
+      <button class="nav-tab"        data-tab="sobre"          role="tab">Sobre mim</button>
+      <button class="nav-tab"        data-tab="reconhecimento" role="tab">Reconhecimento</button>
+      <button class="nav-tab"        data-tab="midia"          role="tab">Na mídia</button>
+      <button class="nav-tab"        data-tab="contato"        role="tab">Contato</button>
     </nav>
-  </header>
+  </div>
 
-  <main class="container content-area">
+  <!-- CONTENT -->
+  <div class="content">
 
-    <!-- TAB: LIVROS -->
-    <div id="tab-livros" class="tab-panel active">
-      <div class="section-label">Coleção literária</div>
-      <h2 class="section-title">Meus livros</h2>
-
-      <div class="books-header">
+    <!-- ── LIVROS ── -->
+    <div id="tab-home" class="tab-panel active" role="tabpanel">
+      <div class="book-header">
         <div>
-          <p style="color: var(--text-secondary); font-size: 14px;">Explore as obras por categoria</p>
+          <div class="book-eyebrow">Coleção literária</div>
+          <div class="book-title-heading">Meus livros</div>
         </div>
-        <div class="filter-group" id="filters"></div>
+        <div class="filter-pills" id="filter-pills">
+          <button class="filter-pill active" data-cat="Todos">Todos</button>
+          <button class="filter-pill" data-cat="Romance Policial" style="--cat:#1E3A5F">Romance Policial</button>
+          <button class="filter-pill" data-cat="Crônicas"         style="--cat:#6B8E7A">Crônicas</button>
+          <button class="filter-pill" data-cat="Suspense"         style="--cat:#7A1F2B">Suspense</button>
+          <button class="filter-pill" data-cat="Infantojuvenil"   style="--cat:#F59E0B">Infantojuvenil</button>
+        </div>
       </div>
-
       <div class="books-grid" id="books-grid"></div>
     </div>
 
-    <!-- TAB: SOBRE -->
-    <div id="tab-sobre" class="tab-panel">
-      <div class="section-label">Sobre</div>
-      <h2 class="section-title">Quem sou eu</h2>
-
-      <div class="about-text">
-        <p>Sou <em>carioca, 65 anos</em>, pai de duas filhas e um leitor compulsivo de suspense, mistério e crime. Engenheiro com mestrado e doutorado em Economia, comecei a escrever seriamente aos 56 anos.</p>
-
-        <p>Minha primeira obra foi a coleção infantojuvenil <em>O Diário das Fantásticas Viagens de Giovana</em> (cinco volumes), que já vendeu mais de 20 mil exemplares e é adotada em escolas brasileiras. A série combina aventura, educação ambiental e exploração dos biomas do Brasil.</p>
-
-        <p>Em 2022, estreei no universo adulto com <em>Crônicas para Casais Quase Modernos</em>, livro que conquistou o Prêmio Asas de Ouro em 2023 — um reconhecimento importante para minha trajetória.</p>
-
-        <p><em>Selva de Pedra</em> é meu primeiro romance policial, resultado de uma vida inteira estudando os grandes mestres do gênero. A trama é uma investigação pelas ruas do Rio de Janeiro, com personagens complexos e reviravoltas bem construídas. O livro foi finalista do Prêmio Rubem Fonseca em 2025.</p>
-
-        <p>Escrevo porque acredito que histórias bem contadas mudam a forma como vemos o mundo — e a nós mesmos.</p>
+    <!-- ── SOBRE ── -->
+    <div id="tab-sobre" class="tab-panel" role="tabpanel">
+      <div class="tab-inner">
+        <div class="section-eyebrow">Sobre mim</div>
+        <div class="section-title">Délio Galvão</div>
+        <div class="about-text">
+          <p>Délio Galvão é carioca, tem 65 anos, é pai de duas meninas e um leitor voraz — especialmente quando o assunto é suspense, mistério e thriller policial. Engenheiro com mestrado e doutorado em Economia, iniciou sua carreira literária aos 56 anos com a coleção infantojuvenil <em>O Diário das Fantásticas Viagens de Giovana</em> (cinco volumes, publicados entre 2018 e 2025).</p>
+          <p>Em 2022, estreou no universo adulto com <em>Crônicas para Casais Quase Modernos</em>, obra que lhe rendeu o Prêmio Asas de Ouro em 2023.</p>
+          <p><em>Selva de Pedra</em> é seu primeiro romance policial — e o resultado de uma vida inteira aprendendo com os grandes mestres do gênero. Nele, o autor tece uma trama bem conduzida, com personagens complexos que parecem saídos da vida real, levando o leitor a percorrer as ruas do Rio de Janeiro em busca de respostas. A obra foi finalista do Prêmio Rubem Fonseca em 2025.</p>
+          <p>Acompanhe o autor no Instagram: <a href="https://www.instagram.com/deliogalvao.escritor/" target="_blank" rel="noopener" style="color:var(--tp);font-weight:500;text-decoration:underline;text-underline-offset:3px;">@deliogalvao.escritor</a></p>
+        </div>
       </div>
     </div>
 
-    <!-- TAB: RECONHECIMENTO -->
-    <div id="tab-reconhecimento" class="tab-panel">
-      <div class="section-label">Prêmios e menções</div>
-      <h2 class="section-title">Reconhecimento</h2>
-
-      <div class="awards-list">
-        <div class="award-item">
-          <div class="award-icon">
-            <i class="ti ti-award"></i>
-          </div>
-          <div class="award-content">
+    <!-- ── RECONHECIMENTO ── -->
+    <div id="tab-reconhecimento" class="tab-panel" role="tabpanel">
+      <div class="tab-inner">
+        <div class="section-eyebrow">Reconhecimento</div>
+        <div class="section-title">Prêmios & menções</div>
+        <a class="award-card" href="https://www.instagram.com/p/C0EtkPuLNre/" target="_blank" rel="noopener">
+          <div class="award-icon-wrap"><i class="ti ti-award"></i></div>
+          <div class="award-body">
             <div class="award-title">Prêmio Asas de Ouro 2023</div>
-            <div class="award-desc">Vencedor na categoria Literatura por <em>Crônicas para Casais Quase Modernos</em></div>
+            <div class="award-desc">Vencedor na categoria literatura</div>
           </div>
-          <div class="award-year">2023</div>
-        </div>
-
-        <div class="award-item">
-          <div class="award-icon">
-            <i class="ti ti-star"></i>
+          <div class="award-right">
+            <span class="award-year">2023</span>
+            <i class="ti ti-chevron-right" style="color:var(--tt);font-size:13px"></i>
           </div>
-          <div class="award-content">
-            <div class="award-title">Semifinalista Prêmio Rubem Fonseca</div>
-            <div class="award-desc">Com o conto "A Última Lua Azul" — um dos maiores prêmios de crime no Brasil</div>
-          </div>
-          <div class="award-year">2024</div>
-        </div>
-
-        <div class="award-item">
-          <div class="award-icon">
-            <i class="ti ti-book"></i>
-          </div>
-          <div class="award-content">
-            <div class="award-title">30 Melhores Livros Infantis de 2021</div>
-            <div class="award-desc">Blog Leiturinha destacou a série Giovana entre os melhores do ano</div>
-          </div>
-          <div class="award-year">2021</div>
+        </a>
+        <div class="award-note">
+          <em>Selva de Pedra</em> também foi destaque em resenhas literárias e portais especializados, como o PublishNews e o Blog Leiturinha — que elegeu a série Giovana entre os 30 melhores livros infantis de 2021.
         </div>
       </div>
     </div>
 
-    <!-- TAB: MÍDIA -->
-    <div id="tab-midia" class="tab-panel">
-      <div class="section-label">Imprensa</div>
-      <h2 class="section-title">Na mídia</h2>
-
-      <div class="media-links">
-        <a href="#" class="media-link">
-          <div class="media-icon"><i class="ti ti-news"></i></div>
-          <div class="media-body">
-            <div class="media-title">Resenha — Selva de Pedra</div>
-            <div class="media-source">lovemybookss.com</div>
-          </div>
-          <i class="ti ti-external-link" style="font-size: 14px; color: var(--text-secondary);"></i>
-        </a>
-
-        <a href="#" class="media-link">
-          <div class="media-icon"><i class="ti ti-news"></i></div>
-          <div class="media-body">
-            <div class="media-title">Crônicas sobre família</div>
-            <div class="media-source">PublishNews</div>
-          </div>
-          <i class="ti ti-external-link" style="font-size: 14px; color: var(--text-secondary);"></i>
-        </a>
-
-        <a href="#" class="media-link">
-          <div class="media-icon"><i class="ti ti-pencil"></i></div>
-          <div class="media-body">
-            <div class="media-title">Artigos e reflexões sobre escrita</div>
-            <div class="media-source">medium.com/@deliogalvao</div>
-          </div>
-          <i class="ti ti-external-link" style="font-size: 14px; color: var(--text-secondary);"></i>
-        </a>
-      </div>
-    </div>
-
-    <!-- TAB: CONTATO -->
-    <div id="tab-contato" class="tab-panel">
-      <div class="section-label">Fale comigo</div>
-      <h2 class="section-title">Contato</h2>
-
-      <div class="contact-wrapper">
-        <p style="margin-bottom: 24px; color: var(--text-secondary);">
-          Interessado em parcerias, eventos ou tem uma ideia? Mande uma mensagem — responderei em breve.
-        </p>
-
-        <form id="contact-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Nome</label>
-              <input type="text" class="form-input" placeholder="Seu nome" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-input" placeholder="seu@email.com" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Assunto</label>
-            <input type="text" class="form-input" placeholder="Ex: Parceria, evento, convite..." required />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Mensagem</label>
-            <textarea class="form-textarea" placeholder="Sua mensagem..." required></textarea>
-          </div>
-
-          <button type="submit" class="submit-btn">
-            <i class="ti ti-send"></i>
-            Enviar
-          </button>
-        </form>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-social">
-      <a href="https://www.instagram.com/deliogalvao.escritor/" class="social-link" aria-label="Instagram" target="_blank">
-        <i class="ti ti-brand-instagram"></i>
-      </a>
-      <a href="https://www.tiktok.com/@deliogalvao" class="social-link" aria-label="TikTok" target="_blank">
-        <i class="ti ti-brand-tiktok"></i>
-      </a>
-      <a href="https://www.facebook.com/deliogalvao.escritor/" class="social-link" aria-label="Facebook" target="_blank">
-        <i class="ti ti-brand-facebook"></i>
-      </a>
-      <a href="https://www.linkedin.com/in/deliogalvao-escritor/" class="social-link" aria-label="LinkedIn" target="_blank">
-        <i class="ti ti-brand-linkedin"></i>
-      </a>
-    </div>
-    <p>© 2025 Délio Galvão. Rio de Janeiro, Brasil.</p>
-  </footer>
-
-  <script>
-    const BOOKS = [
-      { title: "Selva de Pedra", category: "Romance Policial", desc: "Um romance urbano que mergulha nas profundezas da cidade.", featured: true },
-      { title: "Crônicas para Casais Quase Modernos", category: "Crônicas", desc: "Histórias bem-humoradas sobre os desafios do amor contemporâneo.", featured: false },
-      { title: "A Última Lua Azul", category: "Conto Policial", desc: "Uma história de amor e mistério em um encontro raro.", featured: true },
-      { title: "Navalha, Veneno, Mistério", category: "Suspense", desc: "Coletânea de contos de crime e investigação.", featured: true },
-      { title: "Diário das Fantásticas Viagens de Giovana — Vol. 1", category: "Infantojuvenil", desc: "A aventura começa! Giovana embarca em viagens de descoberta.", featured: false },
-      { title: "Diário das Fantásticas Viagens de Giovana — Vol. 2", category: "Infantojuvenil", desc: "A aventura continua em novos destinos e amizades.", featured: false },
-      { title: "Diário das Fantásticas Viagens de Giovana — Vol. 3", category: "Infantojuvenil", desc: "Novas terras, novos desafios e muita imaginação.", featured: false },
-      { title: "Diário das Fantásticas Viagens de Giovana — Vol. 4", category: "Infantojuvenil", desc: "A série favorita com ainda mais magia e aventura.", featured: false },
-      { title: "Diário das Fantásticas Viagens de Giovana — Vol. 5", category: "Infantojuvenil", desc: "O gran finale das aventuras de Giovana.", featured: false },
-      { title: "Melhor do Crime Nacional — Vol. 2", category: "Suspense", desc: "Antologia dos melhores contos de crime brasileiros.", featured: false },
-    ];
-
-    const CATEGORIES = ['Todos', ...new Set(BOOKS.map(b => b.category))];
-
-    let selectedCategory = 'Todos';
-
-    function renderFilters() {
-      const container = document.getElementById('filters');
-      container.innerHTML = CATEGORIES.map(cat => `
-        <button class="filter-btn ${cat === 'Todos' ? 'active' : ''}" data-category="${cat}">
-          ${cat}
-        </button>
-      `).join('');
-
-      container.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          selectedCategory = btn.dataset.category;
-          renderBooks();
-        });
-      });
-    }
-
-    function renderBooks() {
-      const filtered = selectedCategory === 'Todos' ? BOOKS : BOOKS.filter(b => b.category === selectedCategory);
-      const container = document.getElementById('books-grid');
-
-      container.innerHTML = filtered.map(book => `
-        <div class="book-card">
-          <div class="book-cover ${book.featured ? 'featured' : ''}">
-            ${book.featured ? '<div class="featured-badge">Destaque</div>' : ''}
-            ${book.title.charAt(0).toUpperCase()}
-          </div>
-          <div class="book-info">
-            <div class="book-category">${book.category}</div>
-            <div class="book-title">${book.title}</div>
-            <div class="book-desc">${book.desc}</div>
-          </div>
-          <a href="#" class="book-btn">
-            <i class="ti ti-shopping-bag"></i>
-            Comprar
+    <!-- ── NA MÍDIA ── -->
+    <div id="tab-midia" class="tab-panel" role="tabpanel">
+      <div class="tab-inner">
+        <div class="section-eyebrow">Imprensa</div>
+        <div class="section-title">Na mídia</div>
+        <div class="list-group">
+          <a class="list-row" href="https://www.lovemybookss.com/2023/12/resenha-selva-de-pedra.html" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Resenha — Selva de Pedra</div><div class="list-source">lovemybookss.com</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://www.lovemybookss.com/2024/02/resenha-cronicas-para-casais-quase.html" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Resenha — Crônicas para Casais Quase Modernos</div><div class="list-source">lovemybookss.com</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://www.publishnews.com.br/materias/2023/03/22/cronicas-sobre-familia" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Crônicas sobre família</div><div class="list-source">PublishNews</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://mutantexis.wordpress.com/2023/10/24/dica-literaria-41-2023-assassinato-no-alto-leblon/" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Dica literária — Assassinato no Alto Leblon</div><div class="list-source">mutantexis.wordpress.com</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://leiturinha.com.br/blog/os-30-melhores-livros-infantis-de-2021/" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">30 melhores livros infantis de 2021</div><div class="list-source">Blog Leiturinha</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="http://canalinfantil.com.br/viagens-de-giovana/" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-news"></i></div>
+            <div class="list-body"><div class="list-title">Viagens de Giovana — Canal Infantil</div><div class="list-source">canalinfantil.com.br</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
+          </a>
+          <a class="list-row" href="https://medium.com/@deliogalvao" target="_blank" rel="noopener">
+            <div class="list-icon"><i class="ti ti-pencil"></i></div>
+            <div class="list-body"><div class="list-title">Meus textos no Medium</div><div class="list-source">medium.com</div></div>
+            <i class="ti ti-external-link" style="font-size:13px;color:var(--tt)"></i>
           </a>
         </div>
-      `).join('');
-    }
+      </div>
+    </div>
 
-    function setupTabs() {
-      document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          const tabName = tab.dataset.tab;
-          document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-          document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-          tab.classList.add('active');
-          document.getElementById(`tab-${tabName}`).classList.add('active');
-        });
-      });
-    }
+    <!-- ── CONTATO ── -->
+    <div id="tab-contato" class="tab-panel" role="tabpanel">
+      <div class="tab-inner">
+        <div class="section-eyebrow">Fale comigo</div>
+        <div class="section-title">Contato</div>
 
-    function setupForm() {
-      const form = document.getElementById('contact-form');
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Obrigado! Em breve responderei sua mensagem.');
-        form.reset();
-      });
-    }
+        <div class="contact-card">
+          <!-- Formulário -->
+          <div class="contact-form-side">
+            <p class="contact-intro">Para parcerias, eventos ou só para trocar uma ideia sobre livros — manda uma mensagem.</p>
 
-    renderFilters();
-    renderBooks();
-    setupTabs();
-    setupForm();
-  </script>
+            <div id="form-wrap">
+              <div class="form-row">
+                <div>
+                  <label class="form-label" for="f-nome">Nome</label>
+                  <input class="form-input" id="f-nome" type="text" placeholder="Seu nome" />
+                </div>
+                <div>
+                  <label class="form-label" for="f-email">E-mail</label>
+                  <input class="form-input" id="f-email" type="email" placeholder="Seu e-mail" />
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="f-assunto">Assunto</label>
+                <input class="form-input" id="f-assunto" type="text" placeholder="Ex: Parceria, evento, dúvida..." />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="f-msg">Mensagem</label>
+                <textarea class="form-textarea" id="f-msg" rows="5" placeholder="Sua mensagem..."></textarea>
+              </div>
+              <button class="submit-btn" id="submit-btn" disabled>
+                <i class="ti ti-send" style="font-size:14px"></i>
+                Enviar mensagem
+              </button>
+            </div>
 
+            <div class="sent-box" id="sent-box">
+              <i class="ti ti-circle-check sent-icon"></i>
+              <div class="sent-title">Mensagem enviada com sucesso!</div>
+              <div class="sent-sub">Em breve responderei seu email.</div>
+              <button class="reset-btn" id="reset-btn">Enviar outra</button>
+            </div>
+          </div>
+
+          <!-- Painel decorativo -->
+          <div class="contact-deco">
+            <div class="deco-blob" style="width:200px;height:200px;background:#A9BEC9;top:-40px;right:-40px;"></div>
+            <div class="deco-blob" style="width:150px;height:150px;background:#D4B994;bottom:-30px;left:-30px;"></div>
+            <img class="deco-img"
+              src="https://m.media-amazon.com/images/S/amzn-author-media-prod/fkkkqph6got6iqud3er0umuqsh._SX300_CR0%2C0%2C300%2C300_.jpg"
+              alt="Délio Galvão" />
+            <p class="deco-quote">A escrita é a única forma de multiplicar o tempo — cada leitor vive o mesmo instante de forma única.</p>
+            <span class="deco-author">Délio Galvão</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+<script>
+const CAT_COLOR = {
+  "Romance Policial": "#1E3A5F",
+  "Crônicas":         "#6B8E7A",
+  "Suspense":         "#7A1F2B",
+  "Infantojuvenil":   "#F59E0B",
+};
+
+const AMZN = asin => `https://images-na.ssl-images-amazon.com/images/P/${asin}.01.LZZZZZZZ.jpg`;
+const OLIB  = isbn => `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`;
+
+const books = [
+  { id:1,  title:"Selva de Pedra",                                    category:"Romance Policial", description:"Um romance urbano que mergulha nas profundezas da cidade e dos seus segredos.",    color:"#e8f0fe", accent:"#1a56db", featured:true,  cover: AMZN("B0DMFZVR8Q"), link:"https://www.amazon.com.br/dp/B0DMFZVR8Q" },
+  { id:2,  title:"Crônicas para Casais Quase Modernos",               category:"Crônicas",       description:"Histórias bem-humoradas sobre os desafios do amor contemporâneo.",                 color:"#fdf2f8", accent:"#9d174d", featured:false, cover: AMZN("B0D7MWJKG5"), link:"https://www.amazon.com.br/dp/B0D7MWJKG5" },
+  { id:3,  title:"Navalha, Veneno, Mistério",                         category:"Suspense",       description:"Uma coletânea de contos policiais, de suspense e investigação.",                   color:"#fff7ed", accent:"#c2410c", featured:true,  cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR170TVJWwi7Xrj8d-3rBuG6eEit9PhtlP2bAUiKBEN9A&s=10", link:"https://www.editorametamorfose.com.br/1056850/navalha-veneno-misterio" },
+  { id:4,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 1",category:"Infantojuvenil", description:"A aventura começa! Giovana embarca em viagens cheias de descobertas.",            color:"#f0fdf4", accent:"#166534", featured:false, cover: AMZN("B0B51TT4W3"), link:"https://www.amazon.com.br/dp/B0B51TT4W3" },
+  { id:5,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 2",category:"Infantojuvenil", description:"A aventura continua em novos destinos e novas amizades.",                         color:"#faf5ff", accent:"#6b21a8", featured:false, cover: AMZN("B0B7FH27FP"), link:"https://www.amazon.com.br/dp/B0B7FH27FP" },
+  { id:6,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 3",category:"Infantojuvenil", description:"Novas terras, novos desafios e muita imaginação na terceira aventura de Giovana.", color:"#fff7ed", accent:"#b45309", featured:false, cover: AMZN("B0BCFF8MS5"), link:"https://www.amazon.com.br/dp/B0BCFF8MS5" },
+  { id:7,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 4",category:"Infantojuvenil", description:"A série favorita das crianças segue com ainda mais magia e aventura.",             color:"#fdf2f8", accent:"#be185d", featured:false, cover: AMZN("B0BMXSZV1F"), link:"https://www.amazon.com.br/dp/B0BMXSZV1F" },
+  { id:8,  title:"Diário das Fantásticas Viagens de Giovana — Vol. 5",category:"Infantojuvenil", description:"O gran finale das aventuras de Giovana em uma jornada inesquecível.",             color:"#f0fdf4", accent:"#065f46", featured:false, cover: "https://m.media-amazon.com/images/I/81M75QfsV6L._SY425_.jpg", link:"https://www.amazon.com.br" },
+  { id:9,  title:"A Última Lua Azul",                                  category:"Romance Policial", description:"Uma história de amor marcada por encontros raros e momentos únicos.",             color:"#eff6ff", accent:"#1e40af", featured:true,  cover: AMZN("B0GL3K3TZ6"), link:"https://www.amazon.com.br/dp/B0GL3K3TZ6" },
+  { id:10, title:"Melhor do Crime Nacional — Vol. 2",                  category:"Suspense",       description:"Uma antologia reunindo os melhores contos de crime escritos no Brasil.",          color:"#faf5ff", accent:"#5b21b6", featured:false, cover: "https://luvaeditora.com.br/wp-content/uploads/2025/10/CRIME2.webp", link:"https://luvaeditora.com.br/produto/melhor-do-crime-nacional-v-2/" },
+];
+
+let currentCat = "Todos";
+const isDark = () => document.body.classList.contains('dark');
+
+// ── Theme toggle ──
+const themeBtn  = document.getElementById('theme-btn');
+const themeIcon = document.getElementById('theme-icon');
+themeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  themeIcon.className = isDark() ? 'ti ti-sun' : 'ti ti-moon';
+  renderGrid();
+});
+
+// ── Nav tabs ──
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Filter pills ──
+document.querySelectorAll('.filter-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = btn.dataset.cat;
+    renderGrid();
+  });
+});
+
+// ── Books grid ──
+const grid = document.getElementById('books-grid');
+
+function renderGrid() {
+  const filtered = currentCat === 'Todos' ? books : books.filter(b => b.category === currentCat);
+  const coverBg = isDark() ? '#2a2a2e' : null;
+
+  grid.innerHTML = filtered.map(book => {
+    const accent   = CAT_COLOR[book.category] || book.accent;
+    const initials = book.title.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    const coverHTML = book.cover
+      ? `<img
+           src="${book.cover}"
+           alt="Capa de ${book.title}"
+           style="width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:10px;display:block;"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+         />
+         <div class="book-cover" style="display:none;background:${coverBg || book.color};border:1.5px solid ${accent}22">
+           <div class="book-spine" style="background:${accent}"></div>
+           <div class="book-initials" style="color:${accent}">${initials}</div>
+           <div class="book-cat-label" style="color:${accent}">${book.category}</div>
+         </div>`
+      : `<div class="book-cover" style="background:${coverBg || book.color};border:1.5px solid ${accent}22">
+           <div class="book-spine" style="background:${accent}"></div>
+           <div class="book-initials" style="color:${accent}">${initials}</div>
+           <div class="book-cat-label" style="color:${accent}">${book.category}</div>
+         </div>`;
+    return `
+      <div class="book-card">
+        <div class="book-cover-wrap">
+          ${book.featured ? '<div class="featured-badge">Destaque</div>' : ''}
+          ${coverHTML}
+        </div>
+        <div class="book-info">
+          <div class="book-category" style="color:${accent}">${book.category}</div>
+          <div class="book-title">${book.title}</div>
+          <div class="book-desc">${book.description}</div>
+        </div>
+        <a class="buy-btn" href="${book.link}" target="_blank" rel="noopener">
+          <i class="ti ti-shopping-bag" style="font-size:12px"></i>
+          Comprar
+        </a>
+      </div>`;
+  }).join('');
+}
+renderGrid();
+
+// ── Contact form ──
+const nome    = document.getElementById('f-nome');
+const email   = document.getElementById('f-email');
+const assunto = document.getElementById('f-assunto');
+const msg     = document.getElementById('f-msg');
+const submitBtn = document.getElementById('submit-btn');
+
+function checkForm() {
+  submitBtn.disabled = !(nome.value.trim() && email.value.trim() && assunto.value.trim() && msg.value.trim());
+}
+[nome, email, assunto, msg].forEach(el => el.addEventListener('input', checkForm));
+
+submitBtn.addEventListener('click', async () => {
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="ti ti-loader-2" style="font-size:14px;animation:spin .8s linear infinite"></i> Enviando...';
+
+  try {
+    await emailjs.send('service_g01io5p', 'template_1kq0z76', {
+      nome:      nome.value,
+      email:     email.value,
+      assunto:   assunto.value,
+      mensagem:  msg.value,
+    });
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('sent-box').classList.add('show');
+  } catch (err) {
+    submitBtn.innerHTML = '<i class="ti ti-send" style="font-size:14px"></i> Enviar mensagem';
+    checkForm();
+    alert('Erro ao enviar. Tente novamente.');
+  }
+});
+
+document.getElementById('reset-btn').addEventListener('click', () => {
+  [nome, email, assunto, msg].forEach(el => el.value = '');
+  checkForm();
+  document.getElementById('sent-box').classList.remove('show');
+  document.getElementById('form-wrap').style.display = 'block';
+  submitBtn.innerHTML = '<i class="ti ti-send" style="font-size:14px"></i> Enviar mensagem';
+});
+</script>
 </body>
 </html>
