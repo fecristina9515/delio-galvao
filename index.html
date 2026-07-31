@@ -207,6 +207,7 @@
     }
     @media (max-width: 640px) {
       .books-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 8px 16px 32px; }
+      .ig-grid { grid-template-columns: repeat(2, 1fr) !important; }
     }
     @media (min-width: 641px) and (max-width: 860px) {
       .books-grid { grid-template-columns: repeat(3, 1fr); }
@@ -554,7 +555,7 @@
             <i class="ti ti-brand-instagram" style="font-size:14px;color:var(--title)"></i>
             Instagram
           </div>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;" class="ig-grid">
 
             <a href="https://www.instagram.com/p/DWHP4mQDWZU/?img_index=1" target="_blank" rel="noopener"
               style="aspect-ratio:1;border-radius:12px;border:.5px solid var(--border);display:block;text-decoration:none;overflow:hidden;position:relative;transition:transform .18s,box-shadow .18s,border-color .18s;"
@@ -777,6 +778,7 @@ function renderGrid() {
            <div class="book-cat-label" style="color:${accent}">${book.category}</div>
          </div>`;
     return `
+      <a href="${book.link}" target="_blank" rel="noopener" style="text-decoration:none;">
       <div class="book-card">
         <div class="book-cover-wrap">
           ${book.featured ? '<div class="featured-badge">Destaque</div>' : ''}
@@ -787,11 +789,12 @@ function renderGrid() {
           <div class="book-title">${book.title}</div>
           <div class="book-desc">${book.description}</div>
         </div>
-        <a class="buy-btn" href="${book.link}" target="_blank" rel="noopener">
+        <div class="buy-btn">
           <i class="ti ti-shopping-bag" style="font-size:12px"></i>
           Comprar
-        </a>
-      </div>`;
+        </div>
+      </div>
+      </a>`;
   }).join('');
 }
 renderGrid();
